@@ -23,7 +23,7 @@ app.secret_key = 'super secret string'  # Change this!
 
 # These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_PASSWORD'] = 'hello'
 app.config['MYSQL_DATABASE_DB'] = 'photoshare'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -86,15 +86,10 @@ def new_page_function():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if flask.request.method == 'GET':
-        return '''
-			   <form action='login' method='POST'>
-				<input type='text' name='email' id='email' placeholder='email'></input>
-				<input type='password' name='password' id='password' placeholder='password'></input>
-				<input type='submit' name='submit'></input>
-			   </form></br>
-		   <a href='/'>Home</a>
-			   '''
-    # The request method is POST (page is recieving data)
+        return render_template('login.html')    #redirect to login page
+
+
+    # The request method is POST (page is receiving data)
     email = flask.request.form['email']
     cursor = conn.cursor()
     # check if email is registered
@@ -115,7 +110,7 @@ def login():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return render_template('hello.html', message='Logged out')
+    return render_template('logout.html', message='Logged out')
 
 
 @login_manager.unauthorized_handler
@@ -134,6 +129,10 @@ def register_user():
     try:
         email = request.form.get('email')
         password = request.form.get('password')
+        f_name = request.form.get('f_name')
+        l_name = request.form.get('l_name')
+        h_town = request.form.get('h_town')
+        dob = request.form.get('dob')
     except:
         print(
             "couldn't find all tokens")  # this prints to shell, end users will not see this (all print statements go to shell)
@@ -141,16 +140,19 @@ def register_user():
     cursor = conn.cursor()
     test = isEmailUnique(email)
     if test:
-        print(cursor.execute("INSERT INTO Users (email, password) VALUES ('{0}', '{1}')".format(email, password)))
+        print(cursor.execute("INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES "
+                             "('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')".format(email, password, f_name, l_name, h_town, dob)))
         conn.commit()
         # log user in
         user = User()
         user.id = email
+
+        username = email.split('@')[0] # splits email at '@', uses first part of email as username
         flask_login.login_user(user)
-        return render_template('hello.html', name=email, message='Account Created!')
+        return render_template('hello.html', name=username, message='Account Created!')
     else:
         print("couldn't find all tokens")
-        return flask.redirect(flask.url_for('register'))
+        return render_template('register.html', suppress ='False')
 
 
 def getUsersPhotos(uid):
@@ -180,8 +182,16 @@ def isEmailUnique(email):
 @app.route('/profile')
 @flask_login.login_required
 def protected():
-    return render_template('hello.html', name=flask_login.current_user.id, message="Here's your profile")
+    dispName = flask_login.current_user.id.split('@')[0]
+    return render_template('profile.html', name= dispName, message="Here's your profile")
 
+
+# start friends code
+'''
+@app.route('/profile')
+@flask_login.login_required
+def addFriend():
+'''
 
 # begin photo uploading code
 # photos uploaded using base64 encoding so they can be directly embeded in HTML 
@@ -202,9 +212,12 @@ def upload_file():
         print(caption)
         photo_data = base64.standard_b64encode(imgfile.read())
         cursor = conn.cursor()
+        '''
         cursor.execute(
             "INSERT INTO Pictures (imgdata, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(photo_data, uid,
                                                                                                     caption))
+        '''
+        cursor.execute("INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data, caption))
         conn.commit()
         return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!',
                                photos=getUsersPhotos(uid))
@@ -219,7 +232,7 @@ def upload_file():
 # default page
 @app.route("/", methods=['GET'])
 def hello():
-    return render_template('hello.html', message='Welecome to Photoshare')
+    return render_template('hello.html', message='Welcome to Photoshare')
 
 
 if __name__ == "__main__":
