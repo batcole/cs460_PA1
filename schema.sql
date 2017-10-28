@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS photoshare;
 CREATE DATABASE photoshare;
 USE photoshare;
 
@@ -33,10 +34,11 @@ CREATE TABLE Photos
 (
   photo_id int  AUTO_INCREMENT,
   user_id int,
-  imgdata longblob ,
+  imgdata LONGBLOB,
   caption VARCHAR(255),
   INDEX upid_idx (user_id),
-  CONSTRAINT pictures_pk PRIMARY KEY (photo_id)
+  CONSTRAINT pictures_pk PRIMARY KEY (photo_id),
+  FOREIGN KEY (user_id) REFERENCES Users (user_id),
 );
 
 CREATE TABLE Tags
@@ -102,5 +104,5 @@ CREATE TABLE Tag_in
     FOREIGN KEY (photo_id) REFERENCES Photos(photo_id) ON DELETE CASCADE
 );
 
-INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', 1960/6/9);
+INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', "1900-10-02");
 INSERT INTO Users (email, password) VALUES ('test1@bu.edu', 'test');
