@@ -23,7 +23,9 @@ app.secret_key = 'super secret string'  # Change this!
 
 # These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
+
 app.config['MYSQL_DATABASE_PASSWORD'] = 'hello'
+
 app.config['MYSQL_DATABASE_DB'] = 'photoshare'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -157,7 +159,7 @@ def register_user():
 
 def getUsersPhotos(uid):
     cursor = conn.cursor()
-    cursor.execute("SELECT imgdata, picture_id, caption FROM Pictures WHERE user_id = '{0}'".format(uid))
+    cursor.execute("SELECT imgdata, photo_id, caption FROM Photos WHERE user_id = '{0}'".format(uid))
     return cursor.fetchall()  # NOTE list of tuples, [(imgdata, pid), ...]
 
 
@@ -205,28 +207,99 @@ def allowed_file(filename):
 @app.route('/upload', methods=['GET', 'POST'])
 @flask_login.login_required
 def upload_file():
-    if request.method == 'POST':
+    print(request.form.get("Submit"))
+    print(request.method)
+    whichSubmit = request.form.get("Submit")
+    print(whichSubmit)
+    if (whichSubmit == 'Upload'):
+        print("running upload")
         uid = getUserIdFromEmail(flask_login.current_user.id)
         imgfile = request.files['photo']
-        caption = request.form.get('caption')
-        print(caption)
+        print("before caption")
+        caption = str(request.form.get('caption'))
+        print("after caption")
+        album = str(request.form.get('album'))
+      #  tags = request.form.get('tags') #need to wire this
         photo_data = base64.standard_b64encode(imgfile.read())
         cursor = conn.cursor()
         '''
         cursor.execute(
-            "INSERT INTO Pictures (imgdata, user_id, caption) VALUES ('{0}', '{1}', '{2}' )".format(photo_data, uid,
+            "INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data,
                                                                                                     caption))
         '''
         cursor.execute("INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data, caption))
         conn.commit()
-        return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!',
-                               photos=getUsersPhotos(uid))
+        photoid = cursor.lastrowid
+        cursor.execute("INSERT INTO Contains (album_id, photo_id) VALUES  ({0}, {1})".format(getAlbumIdFromName(album),
+                                                                                             photoid))
+        conn.commit()
+        #return render_template('upload.html')
+
+        return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!', photos=getUsersPhotos(uid))
     # The method is GET so we return a  HTML form to upload the a photo.
+    elif (whichSubmit == "createAlbum"):
+        print("whichSubmit running")
+        #do the album making here
+        return createAlbum(request.form.get('albumName'))
     else:
-        return render_template('upload.html')
+        return render_template('upload.html', Albums=getAlbums())
+
+
 
 
 # end photo uploading code
+
+
+#helper functions
+
+
+def getAlbumIdFromName(name): #TODO make sure this wired to go
+    cursor = conn.cursor()
+    cursor.execute("SELECT album_id  FROM Albums WHERE name = '{0}'".format(name))
+    if cursor.rowcount == 0:
+        return
+    return cursor.fetchone()[0]
+
+def createAlbum(album_name):
+    print("createAlbum running")
+    unique = albumUniqueTest(album_name)
+    if unique:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO Albums (name) VALUES ('{0}' )".format(album_name))
+        conn.commit()
+        cursor.execute("INSERT INTO Owns (user_id, album_id) VALUES ({0},{1})".format(Id(), cursor.lastrowid()))
+        conn.commit()
+    else:
+        print("duplicate")
+    return render_template('upload.html', Albums=getAlbums())
+
+def albumUniqueTest(album):
+    cursor = conn.cursor()
+    if cursor.execute("SELECT name FROM Albums WHERE name = '{0}'".format(album)):
+        return False
+    else:
+        return True
+
+def Id():
+    if (flask_login.current_user.is_authenticated):
+        return getUserIdFromEmail(flask_login.current_user.id)
+    else:
+        return "not authenticated"
+
+def getAlbums():
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT A.name FROM Albums AS A WHERE album_id IN (SELECT album_id FROM Owns WHERE user_id={0});".format(
+            Id()))
+    return [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
+
+def getUserIdFromEmail(email):
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id  FROM Users WHERE email = '{0}'".format(email))
+    return cursor.fetchone()[0]
+
+
+
 
 
 # default page
