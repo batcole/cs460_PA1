@@ -9,8 +9,26 @@
             <form method="post" enctype="multipart/form-data" action="/upload">
                 <label for="photo">Select photo:</label>
                 <input type="file" name="photo" required='true' /><br />
-                <label for="caption">Please caption:</label>
-                <input type="text" name="caption" required='true' /><br />
-                <input type="submit" value="Upload" />
+               <label for="caption">Caption this:</label><br />
+                 <input type="text" name="caption" required='true' /><br />
+ <!--               <label for="album">Tag this:</label><br />
+                <input type="text" name="tags" required='false' /><br /> -->
+                <input type="submit" value="Upload" name="Submit"/>
             </form>
+
+
+        <form method="post" enctype="multipart/form-data" action="/upload">
+            {% if albums %}
+                <h2>Here's your albums</h2>
+                    <ul>
+                    {% for album in albums %}
+                        {{ album[2] }}
+                     {% endfor %}
+                     </ul>
+            {% endif %}
+        <label for="Album Name">What would you like to call your new album?:</label><br />
+        <input type="text" name="albumName" required='false' /><br />
+        <input type="submit" value="createAlbum" name="Submit"/>
+        </form>
+
     </body>

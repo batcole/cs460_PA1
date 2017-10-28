@@ -17,7 +17,7 @@ CREATE TABLE Users
 CREATE TABLE Albums
 (
     album_id int AUTO_INCREMENT,
-    date DATETIME NOT NULL,
+    date DATETIME NOT NULL DEFAULT "1000-01-01 00:00:00.000000",
     name VARCHAR(40) NOT NULL,
     PRIMARY KEY (album_id)
 );
