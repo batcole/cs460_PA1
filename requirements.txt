@@ -8,7 +8,6 @@ gevent-websocket==0.9.5
 greenlet==0.4.9
 itsdangerous==0.24
 Jinja2==2.7.3
-MarkupSafe==0.23
 mysql-python==1.2.5
 requests==2.8.1
 SimpleCV==1.3

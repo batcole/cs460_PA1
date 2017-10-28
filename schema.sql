@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS photoshare;
 CREATE DATABASE photoshare;
 USE photoshare;
 
@@ -5,8 +6,8 @@ CREATE TABLE Users
 (
     user_id int AUTO_INCREMENT,
     password varchar(255),
-    f_name VARCHAR(255) NOT NULL DEFAULT "",
-    l_name VARCHAR(255) NOT NULL DEFAULT "",
+    f_name VARCHAR(255) NOT NULL DEFAULT "John" ,
+    l_name VARCHAR(255) NOT NULL DEFAULT "Doe" ,
     email varchar(255) UNIQUE,
     h_town VARCHAR(255),
     dob DATE,
@@ -47,8 +48,8 @@ CREATE TABLE Tags
 
 CREATE TABLE Friends
 (
-    user_id1 int,
-    user_id2 int,
+    email1 VARCHAR(255) UNIQUE NOT NULL,
+    email2 VARCHAR(255) UNIQUE NOT NULL,
     PRIMARY KEY (user_id1, user_id2),
     FOREIGN KEY (user_id1) REFERENCES Users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (user_id2) REFERENCES Users(user_id) ON DELETE CASCADE
@@ -102,5 +103,5 @@ CREATE TABLE Tag_in
     FOREIGN KEY (photo_id) REFERENCES Photos(photo_id) ON DELETE CASCADE
 );
 
-INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', 1960/6/9);
+INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', "1960-09-09");
 INSERT INTO Users (email, password) VALUES ('test1@bu.edu', 'test');
