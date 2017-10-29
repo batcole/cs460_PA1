@@ -1,3 +1,4 @@
+
 <!-- author ben lawson (balawson@bu.edu) -->
 <head>
     <title>Upload a photo!</title>
@@ -17,8 +18,23 @@
             </form>
 
 
+        <select name="album" required='false'>
+                {% for album in Albums %}
+                <option value="{{album}}">{{album}}</option>
+                {% endfor %}
+            </select><br />
+
         <form method="post" enctype="multipart/form-data" action="/upload">
-            {% if albums %}
+
+        <label for="Album Name">What would you like to call your new album?:</label><br />
+        <input type="text" name="albumName" required='false' /><br />
+        <input type="submit" value="createAlbum" name="Submit"/>
+
+        </form>
+
+
+
+        {% if albums %}
                 <h2>Here's your albums</h2>
                     <ul>
                     {% for album in albums %}
@@ -26,9 +42,4 @@
                      {% endfor %}
                      </ul>
             {% endif %}
-        <label for="Album Name">What would you like to call your new album?:</label><br />
-        <input type="text" name="albumName" required='false' /><br />
-        <input type="submit" value="createAlbum" name="Submit"/>
-        </form>
-
     </body>

@@ -17,7 +17,7 @@ CREATE TABLE Users
 CREATE TABLE Albums
 (
     album_id int AUTO_INCREMENT,
-    date DATETIME NOT NULL DEFAULT "1000-01-01 00:00:00.000000",
+    date DATE NOT NULL DEFAULT "1000-01-01",
     name VARCHAR(40) NOT NULL,
     PRIMARY KEY (album_id)
 );
@@ -38,7 +38,7 @@ CREATE TABLE Photos
   caption VARCHAR(255),
   INDEX upid_idx (user_id),
   CONSTRAINT pictures_pk PRIMARY KEY (photo_id),
-  FOREIGN KEY (user_id) REFERENCES Users (user_id),
+  FOREIGN KEY (user_id) REFERENCES Users (user_id)
 );
 
 CREATE TABLE Tags
@@ -51,9 +51,9 @@ CREATE TABLE Friends
 (
     email1 VARCHAR(255) UNIQUE NOT NULL,
     email2 VARCHAR(255) UNIQUE NOT NULL,
-    PRIMARY KEY (user_id1, user_id2),
-    FOREIGN KEY (user_id1) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id2) REFERENCES Users(user_id) ON DELETE CASCADE
+    PRIMARY KEY (email1, email2),
+    FOREIGN KEY (email1) REFERENCES Users(email) ON DELETE CASCADE,
+    FOREIGN KEY (email2) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 
