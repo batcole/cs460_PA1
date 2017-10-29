@@ -23,9 +23,7 @@ app.secret_key = 'super secret string'  # Change this!
 
 # These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
-
-app.config['MYSQL_DATABASE_PASSWORD'] = 'hello'
-
+app.config['MYSQL_DATABASE_PASSWORD'] = 'nash13'
 app.config['MYSQL_DATABASE_DB'] = 'photoshare'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -230,6 +228,8 @@ def upload_file():
         cursor.execute("INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data, caption))
         conn.commit()
         photoid = cursor.lastrowid
+        print("photoid: ", photoid)
+        print("Albumid: ", getAlbumIdFromName(album))
         cursor.execute("INSERT INTO Contains (album_id, photo_id) VALUES  ({0}, {1})".format(getAlbumIdFromName(album),
                                                                                              photoid))
         conn.commit()
@@ -253,10 +253,10 @@ def upload_file():
 #helper functions
 
 
-def getAlbumIdFromName(name): #TODO make sure this wired to go
+def getAlbumIdFromName(name):
     cursor = conn.cursor()
-    cursor.execute("SELECT album_id  FROM Albums WHERE name = '{0}'".format(name))
-    if cursor.rowcount == 0:
+    if (cursor.execute("SELECT album_id  FROM Albums WHERE name = '{0}'".format(name))):
+        print("query ran albumid")
         return
     return cursor.fetchone()[0]
 
@@ -267,11 +267,12 @@ def createAlbum(album_name):
         cursor = conn.cursor()
         cursor.execute("INSERT INTO Albums (name) VALUES ('{0}' )".format(album_name))
         conn.commit()
-        cursor.execute("INSERT INTO Owns (user_id, album_id) VALUES ({0},{1})".format(Id(), cursor.lastrowid()))
+        cursor.execute("INSERT INTO Owns (user_id, album_id) VALUES ({0},{1})".format(Id(), cursor.lastrowid))
         conn.commit()
+        return render_template('upload.html', Albums=getAlbums())
     else:
         print("duplicate")
-    return render_template('upload.html', Albums=getAlbums())
+        return render_template('upload.html', Albums=getAlbums())
 
 def albumUniqueTest(album):
     cursor = conn.cursor()
@@ -287,6 +288,7 @@ def Id():
         return "not authenticated"
 
 def getAlbums():
+    print("get albums running")
     cursor = conn.cursor()
     cursor.execute(
         "SELECT A.name FROM Albums AS A WHERE album_id IN (SELECT album_id FROM Owns WHERE user_id={0});".format(

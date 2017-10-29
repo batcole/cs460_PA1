@@ -38,7 +38,7 @@ CREATE TABLE Photos
   caption VARCHAR(255),
   INDEX upid_idx (user_id),
   CONSTRAINT pictures_pk PRIMARY KEY (photo_id),
-  FOREIGN KEY (user_id) REFERENCES Users (user_id),
+  FOREIGN KEY (user_id) REFERENCES Users (user_id)
 );
 
 CREATE TABLE Tags
@@ -51,9 +51,9 @@ CREATE TABLE Friends
 (
     email1 VARCHAR(255) UNIQUE NOT NULL,
     email2 VARCHAR(255) UNIQUE NOT NULL,
-    PRIMARY KEY (user_id1, user_id2),
-    FOREIGN KEY (user_id1) REFERENCES Users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (user_id2) REFERENCES Users(user_id) ON DELETE CASCADE
+    PRIMARY KEY (email1, email2),
+    FOREIGN KEY (email1) REFERENCES Users(email) ON DELETE CASCADE,
+    FOREIGN KEY (email2) REFERENCES Users(email) ON DELETE CASCADE
 );
 
 
@@ -68,7 +68,7 @@ CREATE TABLE Owns
 
 CREATE TABLE Contains
 (
-    album_id int AUTO_INCREMENT,
+    album_id int,
     photo_id int,
     PRIMARY KEY (album_id, photo_id),
     FOREIGN KEY (album_id)
@@ -105,5 +105,4 @@ CREATE TABLE Tag_in
 );
 
 INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', "1960-09-09");
-
 INSERT INTO Users (email, password) VALUES ('test1@bu.edu', 'test');
