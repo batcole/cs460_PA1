@@ -68,7 +68,7 @@ CREATE TABLE Owns
 
 CREATE TABLE Contains
 (
-    album_id int AUTO_INCREMENT,
+    album_id int,
     photo_id int,
     PRIMARY KEY (album_id, photo_id),
     FOREIGN KEY (album_id)
@@ -105,5 +105,4 @@ CREATE TABLE Tag_in
 );
 
 INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES ('test@bu.edu', 'test', 'John', 'Blanton', 'Johnsville', "1960-09-09");
-
 INSERT INTO Users (email, password) VALUES ('test1@bu.edu', 'test');

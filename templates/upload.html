@@ -12,10 +12,18 @@
                 <input type="file" name="photo" required='true' /><br />
                <label for="caption">Caption this:</label><br />
                  <input type="text" name="caption" required='true' /><br />
- <!--               <label for="album">Tag this:</label><br />
-                <input type="text" name="tags" required='false' /><br /> -->
+              <label for="album">Tag this:</label><br />
+                <input type="text" name="tags" required='false' /><br />
+                <select name="album" required='true'>
+                {% for album in Albums %}
+                <option value="{{album}}">{{album}}</option>
+                {% endfor %}
+            </select><br />
                 <input type="submit" value="Upload" name="Submit"/>
+
             </form>
+
+        <label for="album">album name:</label><br />
 
 
         <select name="album" required='false'>
@@ -43,3 +51,4 @@
                      </ul>
             {% endif %}
     </body>
+

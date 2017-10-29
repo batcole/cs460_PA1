@@ -23,9 +23,7 @@ app.secret_key = 'super secret string'  # Change this!
 
 # These will need to be changed according to your creditionals
 app.config['MYSQL_DATABASE_USER'] = 'root'
-
 app.config['MYSQL_DATABASE_PASSWORD'] = 'hello'
-
 app.config['MYSQL_DATABASE_DB'] = 'photoshare'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 mysql.init_app(app)
@@ -232,10 +230,11 @@ def upload_file():
         uid = getUserIdFromEmail(flask_login.current_user.id)
         imgfile = request.files['photo']
         print("before caption")
-        caption = str(request.form.get('caption'))
+        caption = request.form.get('caption')
         print("after caption")
-        album = str(request.form.get('album'))
-      #  tags = request.form.get('tags') #need to wire this
+        album = request.form.get('album')
+        tags = request.form.get('tags') #need to wire this
+        tags = tags.split(",")
         photo_data = base64.standard_b64encode(imgfile.read())
         cursor = conn.cursor()
         '''
@@ -246,13 +245,26 @@ def upload_file():
         cursor.execute("INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data, caption))
         conn.commit()
         photoid = cursor.lastrowid
+        for i in tags:
+            if len(i) <= 40:
+                if tagUnique(i):
+                    cursor.execute("INSERT INTO Tags (tag_name) VALUES ('{0}')".format(i))
+                    conn.commit()
+                cursor.execute("INSERT INTO Tag_in (tag_name, photo_id) VALUES ('{0}','{1}')".format(i, photoid))
+                conn.commit()
+            else:
+                i = i[:40]
+                if tagUnique(i):
+                    cursor.execute("INSERT INTO Tags (tag_name) VALUES ('{0}')".format(i))
+                    conn.commit()
+                cursor.execute("INSERT INTO Tag_in (tag_name, photo_id) VALUES ('{0}','{1}')".format(i, photoid))
+                conn.commit()
         print("photoid: ", photoid)
         print("Albumid: ", getAlbumIdFromName(album))
         cursor.execute("INSERT INTO Contains (album_id, photo_id) VALUES  ({0}, {1})".format(getAlbumIdFromName(album),
                                                                                              photoid))
         conn.commit()
         #return render_template('upload.html')
-
         return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!', photos=getUsersPhotos(uid))
     # The method is GET so we return a  HTML form to upload the a photo.
     elif (whichSubmit == "createAlbum"):
@@ -280,6 +292,8 @@ def getUsersFromEmail(email):
 
 def getAlbumIdFromName(name):
     cursor = conn.cursor()
+    print("get albumid from nbame called")
+    print(name)
     if (cursor.execute("SELECT album_id  FROM Albums WHERE name = '{0}'".format(name))):
         print("query ran albumid")
         return cursor.fetchone()[0]
@@ -326,7 +340,12 @@ def getUserIdFromEmail(email):
     cursor.execute("SELECT user_id  FROM Users WHERE email = '{0}'".format(email))
     return cursor.fetchone()[0]
 
-
+def tagUnique(tag):
+    cursor = conn.cursor()
+    if cursor.execute("SELECT tag_name FROM Tags WHERE tag_name = '{0}'".format(tag)):
+        return False
+    else:
+        return True
 
 
 
