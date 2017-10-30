@@ -203,6 +203,16 @@ def search():
     return render_template('search.html')
 
 
+@app.route('/c_search', methods=['GET', 'POST'])
+def c_search():
+    if request.method == 'POST':
+        txt = request.form.get("search")
+        ans = getCommentsFromText(txt)
+        return render_template('c_search.html', comments = ans)
+    else:
+        return render_template('c_search.html')
+
+
 
 
 # start friends code
@@ -212,9 +222,17 @@ def search():
 def addFriend():
     if request.method == 'POST':
         email = request.form.get('addFriend')
-        addFriendByEmail(email)
         u = flask_login.current_user.id
-        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u))
+        '''  getUserIdFromEmail
+    ans = cursor.fetchone()[0]
+TypeError: 'NoneType' object has no attribute '__getitem__'
+                email not passing correctly
+        if (isFriend(getUserIdFromEmail(email))):
+            return render_template('profile.html', message = 'You are already Friends', friends = getFriends(u),albums = getAlbums())  # name=getUserName()
+        else:
+        '''
+        addFriendByEmail(email)
+        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u), )
     else:
         return render_template('results.html')
 
@@ -422,6 +440,8 @@ def showComment(pid):
     tup = cursor.fetchall()
     return tup
 
+# end comments code
+
 
 #helper functions
 
@@ -452,15 +472,39 @@ def getFriends(user):
     ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
     return ans
 
+def isFriend(user):
+    cursor = conn.cursor()
+    u1 = getUserIdFromEmail(flask_login.current_user.id)
+    u2 = getUserIdFromEmail(user)
+    query = "SELECT email FROM Friends WHERE (uid1 = '{0}' AND uid2 = '{1}') OR (uid1 = '{1}' AND uid2 = '{0}')".format(u1, u2)
+    cursor.execute(query)
+    f = cursor.fetchall()
+    if (len(f) == 0):
+        return False
+    else:
+        return True
 
 def addFriendByEmail(email):
     cursor = conn.cursor()
     u1 = getUserIdFromEmail(flask_login.current_user.id)
     u2 = getUserIdFromEmail(email)
-    print(u1, u2, 'done')
-    query = "INSERT INTO Friends(uid1, uid2) VALUES ('{0}', '{1}')".format(u1, u2)
+    if (u1 == u2):
+        return render_template('profile.html', message = 'You cannot Friend yourself', friends = getFriends(u1),
+                                albums=getAlbums())  #name=getUserName()
+    else:
+        print(u1, u2, 'done')
+        query = "INSERT INTO Friends(uid1, uid2) VALUES ('{0}', '{1}')".format(u1, u2)
+        cursor.execute(query)
+        conn.commit()
+
+def getCommentsFromText(string):
+    cursor = conn.cursor()
+    query = "SELECT Users.email, COUNT(*) FROM Users JOIN Comments ON Users.user_id = Comments.user_id " \
+            "WHERE content LIKE '%{0}%' GROUP BY Users.email ORDER BY COUNT(*) DESC;".format(string)
     cursor.execute(query)
-    conn.commit()
+    return cursor.fetchall()
+
+
 
 def getUsersFromEmail(email):
     cursor = conn.cursor()
