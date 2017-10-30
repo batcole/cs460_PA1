@@ -28,6 +28,20 @@
 
 </form>
 
+{% if tagsPhotos %}
+<h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
+        <ul>
+        {% for photo in tagsPhotos %}
+            <li>
+            <img src='data:image/png;base64, {{photo[0][0]}}'/>
+            <button name="submit" value="like" type="submit">Like</button>
+            <button name="submit" value="comment" type="comment">Comment</button>
+            </li>
+        {% endfor %}
+        </ul>
+
+{% endif %}
+
 {% if tagPhotos %}
 <h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
         <ul>

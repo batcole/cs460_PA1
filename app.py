@@ -337,31 +337,36 @@ def photo_stream():
     print("taglist in photo_stream:", tagList)
     addTags = str(request.form.get("tags"))
     userFilter = request.form.get("filter")
+
     tagForSearch1 = request.form.get("existing_tags")
-    lenGet = tagForSearch1.split(",")
-    print("tfs1: ",tagForSearch1)
-    print(tagForSearch1)
-   # return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList,
-   #                        tagForSearch=tagForSearch1)
+    lenGet = []
+    print("tfs1: ", tagForSearch1)
+
+    if tagForSearch1 is not None:
+        if ("," in tagForSearch1):
+            lenGet = tagForSearch1.split(",")
+        else:
+            lenGet.append(tagForSearch1)
+
+    print(lenGet)
+
     print("tagList: ", tagList)
     print("userFilter: ", userFilter)
     print("new tags: ", addTags)
+    print("lenGet length: ", len(lenGet))
     if (addTags is not None) & (addTags != ""):
         tagList.append(addTags)
+
     elif (userFilter == "all") & (len(lenGet) == 1):  # tags and all pictures
         print("all and tags>0)")
         print("lentag list: ", len(lenGet))
         print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
         print("photos with tag: ", photosWithTag(tagForSearch1))
         return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1)
+    elif (userFilter=="all") & (len(lenGet) > 1):
+        return render_template('photoViewing.html', tagsPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1)
     print("calling last line")
-    return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList)
-
-
-
-
-
-
+    return render_template('photoViewing.html',  tagList=tagList)
 
 
 
@@ -509,10 +514,19 @@ def photosWithTag(tags):
     print("calling photosWithTag")
     print("tags: ",tags)
     cursor = conn.cursor()
-    cursor.execute("SELECT p.imgdata, p.photo_id, p.caption FROM Photos AS P WHERE p.photo_id IN (SELECT DISTINCT p.photo_id FROM Tag_in WHERE tag_name = '{0}')".format(tags))
+    cursor.execute("SELECT p.imgdata, p.photo_id, p.caption FROM Photos AS P WHERE p.photo_id IN (SELECT DISTINCT photo_id FROM Tag_in WHERE tag_name = '{0}')".format(tags))
     return cursor.fetchall()
 
-
+def multipleTags(tags):
+    print("calling multipleTags")
+    print("tags: ", tags)
+    tagHolder = []
+    for i in tags:
+        temp = photosWithTag(i)
+        if temp not in tagHolder:
+            tagHolder.append(temp)
+    print("tagholder: ", tagHolder)
+    return tagHolder
 
 
 
