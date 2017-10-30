@@ -337,7 +337,10 @@ def photo_stream():
     print("taglist in photo_stream:", tagList)
     addTags = str(request.form.get("tags"))
     userFilter = request.form.get("filter")
-
+    like = request.form.get("like")
+    print("like: ", like)
+    if (like is not None):
+        likePhoto(like)
     tagForSearch1 = request.form.get("existing_tags")
     lenGet = []
     print("tfs1: ", tagForSearch1)
@@ -349,7 +352,6 @@ def photo_stream():
             lenGet.append(tagForSearch1)
 
     print(lenGet)
-
     print("tagList: ", tagList)
     print("userFilter: ", userFilter)
     print("new tags: ", addTags)
@@ -362,11 +364,11 @@ def photo_stream():
         print("lentag list: ", len(lenGet))
         print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
         print("photos with tag: ", photosWithTag(tagForSearch1))
-        return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+        return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     elif (userFilter=="all") & (len(lenGet) > 1):
-        return render_template('photoViewing.html', tagsPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+        return render_template('photoViewing.html', photos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     print("calling last line")
-    return render_template('photoViewing.html',  tagList=tagList, topTags=topTags())
+    return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
 
 
 
@@ -547,6 +549,12 @@ def topTags():
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT tag_name FROM Tags GROUP BY tag_name ORDER BY count(*) DESC")
     return cursor.fetchall()
+
+def likePhoto(photo_id):
+    print("likePhoto called")
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Likes (photo_id, user_id) VALUES ('{0}', '{1}')".format(photo_id, Id()))
+    conn.commit()
 
 
 # default page

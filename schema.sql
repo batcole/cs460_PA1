@@ -95,6 +95,15 @@ CREATE TABLE Comment_On_Photo
     FOREIGN KEY (Photo_id) REFERENCES Photos(photo_id) ON DELETE CASCADE
 );
 
+CREATE TABLE Likes
+(
+    photo_id INT,
+    user_id INT,
+    PRIMARY KEY (photo_id, user_id),
+    FOREIGN KEY (photo_id) REFERENCES Photos (photo_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
+);
+
 CREATE TABLE Tag_in
 (
     tag_name VARCHAR(40),

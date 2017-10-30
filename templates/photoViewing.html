@@ -38,50 +38,21 @@
 {% endif %}
 
 
-{% if tagsPhotos %}
-<h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
-        <ul>
-        {% for photo in tagsPhotos %}
-            <li>
-            <img src='data:image/png;base64, {{photo[0][0]}}'/>
-            <button name="submit" value="like" type="submit">Like</button>
-            <button name="submit" value="comment" type="comment">Comment</button>
-            </li>
-        {% endfor %}
-        </ul>
-
-{% endif %}
-
-{% if tagPhotos %}
-<h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
-        <ul>
-        {% for photo in tagPhotos %}
-            <li>
-            <img src='data:image/png;base64, {{photo[0]}}'/>
-            <button name="submit" value="like" type="submit">Like</button>
-            <button name="submit" value="comment" type="comment">Comment</button>
-            </li>
-        {% endfor %}
-        </ul>
-
-{% endif %}
-
-
-
-
+<form method="post" action="{{url_for('photo_stream') }}">
 {% if photos %}
     <h2>Here are all the photos on BS</h2>
         <ul>
         {% for photo in photos %}
             <li>
             <img src='data:image/png;base64, {{photo[0]}}'/>
-            <button name="submit" value="like" type="submit">Like</button>
-            <button name="submit" value="comment" type="comment">Comment</button>
+            <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+            <button name="comment" value="{{ photo[1] }}" type="submit">Comment</button>
             </li>
         {% endfor %}
         </ul>
 {% endif %}
 
+</form>
 
 
 </body>
