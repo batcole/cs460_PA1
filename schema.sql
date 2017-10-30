@@ -22,9 +22,6 @@ CREATE TABLE Albums
     PRIMARY KEY (album_id)
 );
 
-
-
-
 CREATE TABLE Photos
 (
   photo_id int NOT NULL AUTO_INCREMENT,

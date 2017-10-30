@@ -49,7 +49,9 @@
             <img src='data:image/png;base64, {{photo[0]}}'/>
 
             <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+
             </form>
+
 
                 <form method="POST" action="{{ url_for('postComment') }}">
                     <br>Comment:<br>
@@ -67,6 +69,20 @@
 {% endif %}
 
 
+<br>
+{% if likesVisible %}
+	<label>Likes : <strong>{{likes}}</strong></label><br>
+	<label>Users Who Liked: {{users}}</label><br>
+	{% for comment in comments %}
+			<label>Comment: {{comment}}</label><br>
+	{% endfor %}
+{% endif %}
+
+
+
+
+
+</form>
 
 
 </body>

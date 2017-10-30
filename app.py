@@ -354,11 +354,13 @@ def photo_stream():
     if (viewId is not None):
         (users, likes, comments) = getInteractions(viewId)
 
-    #print(lenGet)
-    #print("tagList: ", tagList)
-    #print("userFilter: ", userFilter)
-    #print("new tags: ", addTags)
-    #print("lenGet length: ", len(lenGet))
+        return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList,
+                               tagForSearch=tagForSearch1, topTags=topTags(), likesVisible=True, likes=likes, users=users, comments=comments)
+    print(lenGet)
+    print("tagList: ", tagList)
+    print("userFilter: ", userFilter)
+    print("new tags: ", addTags)
+    print("lenGet length: ", len(lenGet))
     if (addTags is not None) & (addTags != ""):
         tagList.append(addTags)
 
@@ -585,22 +587,29 @@ def dupeLike(photo_id):
         return False
 
 def getInteractions(viewId):
+    print("getInteractions called")
     cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(L.photo_id) FROM Likes L, Pictures P WHERE L.photo_id = P.photo_id AND P.photo_id = {0})".format(viewId))
-    likes = cursor.fetchall()
-    userLikes = likes[0][0]
+    cursor.execute("SELECT COUNT(L.photo_id) FROM Likes L, Photos P WHERE L.photo_id = P.photo_id AND P.photo_id = {0}".format(viewId))
+    print("ran likes")
+    holder = cursor.fetchall()
+    likes = holder[0][0]
+    cursor.execute("SELECT group_concat(u.email SEPARATOR ', ') FROM Users U, Likes L WHERE U.user_id = L.user_id AND L.photo_id={0};".format(
+        viewId))
+    holder = cursor.fetchall()
+    usersLike = holder[0][0]
 
     cursor.execute(str(
-        "SELECT group_concat(content separator '$') FROM Photos P, Comments C WHERE P.photo_id = C.photo_id AND p.picture_id = {0};".format(
+        "SELECT group_concat(text separator '$') FROM Photos P, Comments C WHERE P.photo_id = C.photo_id AND P.photo_id = {0};".format(
             viewId)))
-    list = cursor.fetchall()
-    comments = list[0][0]
-    if not comments:
+    holder = cursor.fetchall()
+    comments = holder[0][0]
+    if comments is None:
         comments = []
     else:
-        comments = comments.split("|")
-    tuple = (likes, comments, likers)
-    return tuple
+        comments = comments.split("$")
+    newList = (usersLike, likes, comments)
+    print("newlist: ", newList)
+    return newList
 
 
 
