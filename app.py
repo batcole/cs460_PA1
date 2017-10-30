@@ -362,11 +362,11 @@ def photo_stream():
         print("lentag list: ", len(lenGet))
         print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
         print("photos with tag: ", photosWithTag(tagForSearch1))
-        return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1)
+        return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     elif (userFilter=="all") & (len(lenGet) > 1):
-        return render_template('photoViewing.html', tagsPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1)
+        return render_template('photoViewing.html', tagsPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     print("calling last line")
-    return render_template('photoViewing.html',  tagList=tagList)
+    return render_template('photoViewing.html',  tagList=tagList, topTags=topTags())
 
 
 
@@ -528,6 +528,11 @@ def multipleTags(tags):
     print("tagholder: ", tagHolder)
     return tagHolder
 
+def topTags():
+    print("topTags called")
+    cursor = conn.cursor()
+    cursor.execute("SELECT DISTINCT tag_name FROM Tags GROUP BY tag_name ORDER BY count(*) DESC")
+    return cursor.fetchall()
 
 
 # default page

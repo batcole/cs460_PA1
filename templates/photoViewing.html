@@ -28,6 +28,16 @@
 
 </form>
 
+{% if topTags %}
+<h2>Here are all the top tags on BS</h2>
+{% for tag in topTags %}
+            <li>
+            {{ tag }}
+            </li>
+        {% endfor %}
+{% endif %}
+
+
 {% if tagsPhotos %}
 <h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
         <ul>
@@ -55,6 +65,8 @@
         </ul>
 
 {% endif %}
+
+
 
 
 {% if photos %}

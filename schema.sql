@@ -77,7 +77,7 @@ CREATE TABLE Contain
       REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Leaves
+CREATE TABLE Leaves_on
 (
     user_id int AUTO_INCREMENT,
     comment_id int,

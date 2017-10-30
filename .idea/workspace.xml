@@ -22,53 +22,54 @@
       <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="351" column="0" lean-forward="true" selection-start-line="351" selection-start-column="0" selection-end-line="351" selection-end-column="0" />
+            <state relative-caret-position="3040">
+              <caret line="514" column="24" lean-forward="true" selection-start-line="514" selection-start-column="24" selection-end-line="514" selection-end-column="24" />
               <folding>
                 <element signature="e#572#584#0" expanded="true" />
-                <marker date="1509344072752" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
-                <marker date="1509344072752" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
-                <marker date="1509344072752" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
-                <marker date="1509344072752" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
-                <marker date="1509344072752" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
-                <marker date="1509344072752" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
-                <marker date="1509344072752" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
-                <marker date="1509344072752" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
-                <marker date="1509344072752" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
-                <marker date="1509344072752" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
-                <marker date="1509344072752" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
-                <marker date="1509344072752" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
-                <marker date="1509344072752" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
-                <marker date="1509344072752" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
-                <marker date="1509344072752" expanded="true" signature="13882:13955" ph="SELECT email... Friends" />
-                <marker date="1509344072752" expanded="true" signature="13882:14052" ph="SELECT email... " />
-                <marker date="1509344072752" expanded="true" signature="13979:14052" ph="SELECT email... Friends" />
-                <marker date="1509344072752" expanded="true" signature="14396:14449" ph="INSERT INTO Friends... " />
-                <marker date="1509344072752" expanded="true" signature="14588:14635" ph="SELECT email... Users" />
-                <marker date="1509344072752" expanded="true" signature="14907:14954" ph="SELECT album... Albums" />
-                <marker date="1509344072752" expanded="true" signature="15249:15290" ph="INSERT INTO Albums... " />
-                <marker date="1509344072752" expanded="true" signature="15358:15411" ph="INSERT INTO Owns... " />
-                <marker date="1509344072752" expanded="true" signature="15715:15758" ph="SELECT name Albums" />
-                <marker date="1509344072752" expanded="true" signature="16104:16198" ph="SELECT A.nam... Albums" />
-                <marker date="1509344072752" expanded="true" signature="16154:16194" ph="SELECT album... Owns" />
-                <marker date="1509344072752" expanded="true" signature="16471:16517" ph="SELECT user_... Users" />
-                <marker date="1509344072752" expanded="true" signature="16752:16800" ph="SELECT tag_n... Tags" />
-                <marker date="1509344072752" expanded="true" signature="17004:17112" ph="SELECT imgda... Photos" />
-                <marker date="1509344072752" expanded="true" signature="17004:17113" ph="SELECT imgda... Photos" />
-                <marker date="1509344072752" expanded="true" signature="17004:17146" ph="SELECT imgda... Photos" />
-                <marker date="1509344072752" expanded="true" signature="17004:17149" ph="SELECT imgda... Photos" />
-                <marker date="1509344072752" expanded="true" signature="17060:17111" ph="SELECT photo... Contains" />
-                <marker date="1509344072752" expanded="true" signature="17060:17112" ph="SELECT photo... Contains" />
-                <marker date="1509344072752" expanded="true" signature="17365:17385" ph="DELETE FROM " />
-                <marker date="1509344072752" expanded="true" signature="17408:17444" ph="DELETE FROM " />
-                <marker date="1509344072752" expanded="true" signature="17597:17686" ph="DELETE FROM " />
-                <marker date="1509344072752" expanded="true" signature="17635:17682" ph="SELECT photo... Contains" />
-                <marker date="1509344072752" expanded="true" signature="17725:17761" ph="DELETE FROM " />
-                <marker date="1509344072752" expanded="true" signature="17866:17911" ph="SELECT * FRO... Photos" />
-                <marker date="1509344072752" expanded="true" signature="18009:18098" ph="SELECT tag_n... Tags" />
-                <marker date="1509344072752" expanded="true" signature="18402:18446" ph="SELECT p.img... " />
-                <marker date="1509344072752" expanded="true" signature="18402:18540" ph="SELECT p.img... Photos" />
-                <marker date="1509344072752" expanded="true" signature="18480:18539" ph="SELECT DISTI... Tag_in" />
+                <marker date="1509344573175" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
+                <marker date="1509344573175" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
+                <marker date="1509344573175" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
+                <marker date="1509344573175" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
+                <marker date="1509344573175" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
+                <marker date="1509344573175" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
+                <marker date="1509344573175" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
+                <marker date="1509344573175" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
+                <marker date="1509344573175" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
+                <marker date="1509344573175" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
+                <marker date="1509344573175" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
+                <marker date="1509344573175" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
+                <marker date="1509344573175" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
+                <marker date="1509344573175" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
+                <marker date="1509344573175" expanded="true" signature="13939:14012" ph="SELECT email... Friends" />
+                <marker date="1509344573175" expanded="true" signature="13939:14109" ph="SELECT email... " />
+                <marker date="1509344573175" expanded="true" signature="14036:14109" ph="SELECT email... Friends" />
+                <marker date="1509344573175" expanded="true" signature="14453:14506" ph="INSERT INTO Friends... " />
+                <marker date="1509344573175" expanded="true" signature="14645:14692" ph="SELECT email... Users" />
+                <marker date="1509344573175" expanded="true" signature="14964:15011" ph="SELECT album... Albums" />
+                <marker date="1509344573175" expanded="true" signature="15306:15347" ph="INSERT INTO Albums... " />
+                <marker date="1509344573175" expanded="true" signature="15415:15468" ph="INSERT INTO Owns... " />
+                <marker date="1509344573175" expanded="true" signature="15772:15815" ph="SELECT name Albums" />
+                <marker date="1509344573175" expanded="true" signature="16161:16255" ph="SELECT A.nam... Albums" />
+                <marker date="1509344573175" expanded="true" signature="16211:16251" ph="SELECT album... Owns" />
+                <marker date="1509344573175" expanded="true" signature="16528:16574" ph="SELECT user_... Users" />
+                <marker date="1509344573175" expanded="true" signature="16809:16857" ph="SELECT tag_n... Tags" />
+                <marker date="1509344573175" expanded="true" signature="17061:17169" ph="SELECT imgda... Photos" />
+                <marker date="1509344573175" expanded="true" signature="17061:17170" ph="SELECT imgda... Photos" />
+                <marker date="1509344573175" expanded="true" signature="17061:17203" ph="SELECT imgda... Photos" />
+                <marker date="1509344573175" expanded="true" signature="17061:17206" ph="SELECT imgda... Photos" />
+                <marker date="1509344573175" expanded="true" signature="17117:17168" ph="SELECT photo... Contains" />
+                <marker date="1509344573175" expanded="true" signature="17117:17169" ph="SELECT photo... Contains" />
+                <marker date="1509344573175" expanded="true" signature="17422:17442" ph="DELETE FROM " />
+                <marker date="1509344573175" expanded="true" signature="17465:17501" ph="DELETE FROM " />
+                <marker date="1509344573175" expanded="true" signature="17654:17743" ph="DELETE FROM " />
+                <marker date="1509344573175" expanded="true" signature="17692:17739" ph="SELECT photo... Contains" />
+                <marker date="1509344573175" expanded="true" signature="17782:17818" ph="DELETE FROM " />
+                <marker date="1509344573175" expanded="true" signature="17923:17968" ph="SELECT * FRO... Photos" />
+                <marker date="1509344573175" expanded="true" signature="18066:18155" ph="SELECT tag_n... Tags" />
+                <marker date="1509344573175" expanded="true" signature="18459:18503" ph="SELECT p.img... " />
+                <marker date="1509344573175" expanded="true" signature="18459:18597" ph="SELECT p.img... Photos" />
+                <marker date="1509344573175" expanded="true" signature="18537:18596" ph="SELECT DISTI... Tag_in" />
+                <marker date="1509344573175" expanded="true" signature="19014:19089" ph="SELECT DISTI... Tags" />
               </folding>
             </state>
           </provider>
@@ -77,10 +78,9 @@
       <file leaf-file-name="photoViewing.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/photoViewing.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+            <state relative-caret-position="675">
+              <caret line="45" column="59" lean-forward="false" selection-start-line="45" selection-start-column="59" selection-end-line="45" selection-end-column="59" />
               <folding>
-                <element signature="n#src#0;n#img#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#li#0;n#ul#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#src#0;n#img#0;n#li#0;n#ul#2;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -91,7 +91,7 @@
       <file leaf-file-name="profile.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/profile.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
+            <state relative-caret-position="610">
               <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
               <folding />
             </state>
@@ -113,8 +113,8 @@
       <file leaf-file-name="schema.sql" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/schema.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="66" column="2" lean-forward="true" selection-start-line="66" selection-start-column="2" selection-end-line="66" selection-end-column="2" />
+            <state relative-caret-position="761">
+              <caret line="79" column="22" lean-forward="true" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -189,8 +189,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/schema.sql" />
-        <option value="$PROJECT_DIR$/templates/photoViewing.html" />
         <option value="$PROJECT_DIR$/app.py" />
+        <option value="$PROJECT_DIR$/templates/photoViewing.html" />
       </list>
     </option>
   </component>
@@ -423,49 +423,50 @@
           <caret line="16" column="21" lean-forward="false" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
           <folding>
             <element signature="e#572#584#0" expanded="true" />
-            <marker date="1509344072752" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
-            <marker date="1509344072752" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
-            <marker date="1509344072752" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
-            <marker date="1509344072752" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
-            <marker date="1509344072752" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
-            <marker date="1509344072752" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
-            <marker date="1509344072752" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
-            <marker date="1509344072752" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
-            <marker date="1509344072752" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
-            <marker date="1509344072752" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
-            <marker date="1509344072752" expanded="true" signature="13882:13955" ph="SELECT email... Friends" />
-            <marker date="1509344072752" expanded="true" signature="13882:14052" ph="SELECT email... " />
-            <marker date="1509344072752" expanded="true" signature="13979:14052" ph="SELECT email... Friends" />
-            <marker date="1509344072752" expanded="true" signature="14396:14449" ph="INSERT INTO Friends... " />
-            <marker date="1509344072752" expanded="true" signature="14588:14635" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="14907:14954" ph="SELECT album... Albums" />
-            <marker date="1509344072752" expanded="true" signature="15249:15290" ph="INSERT INTO Albums... " />
-            <marker date="1509344072752" expanded="true" signature="15358:15411" ph="INSERT INTO Owns... " />
-            <marker date="1509344072752" expanded="true" signature="15715:15758" ph="SELECT name Albums" />
-            <marker date="1509344072752" expanded="true" signature="16104:16198" ph="SELECT A.nam... Albums" />
-            <marker date="1509344072752" expanded="true" signature="16154:16194" ph="SELECT album... Owns" />
-            <marker date="1509344072752" expanded="true" signature="16471:16517" ph="SELECT user_... Users" />
-            <marker date="1509344072752" expanded="true" signature="16752:16800" ph="SELECT tag_n... Tags" />
-            <marker date="1509344072752" expanded="true" signature="17004:17112" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17113" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17146" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17149" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17060:17111" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17060:17112" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17365:17385" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17408:17444" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17597:17686" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17635:17682" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17725:17761" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17866:17911" ph="SELECT * FRO... Photos" />
-            <marker date="1509344072752" expanded="true" signature="18009:18098" ph="SELECT tag_n... Tags" />
-            <marker date="1509344072752" expanded="true" signature="18402:18446" ph="SELECT p.img... " />
-            <marker date="1509344072752" expanded="true" signature="18402:18540" ph="SELECT p.img... Photos" />
-            <marker date="1509344072752" expanded="true" signature="18480:18539" ph="SELECT DISTI... Tag_in" />
+            <marker date="1509344573175" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
+            <marker date="1509344573175" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
+            <marker date="1509344573175" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
+            <marker date="1509344573175" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
+            <marker date="1509344573175" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
+            <marker date="1509344573175" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
+            <marker date="1509344573175" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
+            <marker date="1509344573175" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
+            <marker date="1509344573175" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
+            <marker date="1509344573175" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
+            <marker date="1509344573175" expanded="true" signature="13939:14012" ph="SELECT email... Friends" />
+            <marker date="1509344573175" expanded="true" signature="13939:14109" ph="SELECT email... " />
+            <marker date="1509344573175" expanded="true" signature="14036:14109" ph="SELECT email... Friends" />
+            <marker date="1509344573175" expanded="true" signature="14453:14506" ph="INSERT INTO Friends... " />
+            <marker date="1509344573175" expanded="true" signature="14645:14692" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="14964:15011" ph="SELECT album... Albums" />
+            <marker date="1509344573175" expanded="true" signature="15306:15347" ph="INSERT INTO Albums... " />
+            <marker date="1509344573175" expanded="true" signature="15415:15468" ph="INSERT INTO Owns... " />
+            <marker date="1509344573175" expanded="true" signature="15772:15815" ph="SELECT name Albums" />
+            <marker date="1509344573175" expanded="true" signature="16161:16255" ph="SELECT A.nam... Albums" />
+            <marker date="1509344573175" expanded="true" signature="16211:16251" ph="SELECT album... Owns" />
+            <marker date="1509344573175" expanded="true" signature="16528:16574" ph="SELECT user_... Users" />
+            <marker date="1509344573175" expanded="true" signature="16809:16857" ph="SELECT tag_n... Tags" />
+            <marker date="1509344573175" expanded="true" signature="17061:17169" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17170" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17203" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17206" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17117:17168" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17117:17169" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17422:17442" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17465:17501" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17654:17743" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17692:17739" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17782:17818" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17923:17968" ph="SELECT * FRO... Photos" />
+            <marker date="1509344573175" expanded="true" signature="18066:18155" ph="SELECT tag_n... Tags" />
+            <marker date="1509344573175" expanded="true" signature="18459:18503" ph="SELECT p.img... " />
+            <marker date="1509344573175" expanded="true" signature="18459:18597" ph="SELECT p.img... Photos" />
+            <marker date="1509344573175" expanded="true" signature="18537:18596" ph="SELECT DISTI... Tag_in" />
+            <marker date="1509344573175" expanded="true" signature="19014:19089" ph="SELECT DISTI... Tags" />
           </folding>
         </state>
       </provider>
@@ -727,14 +728,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/schema.sql">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="66" column="2" lean-forward="true" selection-start-line="66" selection-start-column="2" selection-end-line="66" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/logout.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -763,18 +756,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/profile.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
+        <state relative-caret-position="610">
           <caret line="54" column="0" lean-forward="false" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/schema.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="761">
+          <caret line="79" column="22" lean-forward="true" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/photoViewing.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="47" column="27" lean-forward="false" selection-start-line="47" selection-start-column="27" selection-end-line="47" selection-end-column="27" />
+        <state relative-caret-position="675">
+          <caret line="45" column="59" lean-forward="false" selection-start-line="45" selection-start-column="59" selection-end-line="45" selection-end-column="59" />
           <folding>
-            <element signature="n#src#0;n#img#0;n#li#0;n#ul#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#li#0;n#ul#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#src#0;n#img#0;n#li#0;n#ul#2;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
@@ -783,53 +783,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="351" column="0" lean-forward="true" selection-start-line="351" selection-start-column="0" selection-end-line="351" selection-end-column="0" />
+        <state relative-caret-position="3040">
+          <caret line="514" column="24" lean-forward="true" selection-start-line="514" selection-start-column="24" selection-end-line="514" selection-end-column="24" />
           <folding>
             <element signature="e#572#584#0" expanded="true" />
-            <marker date="1509344072752" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
-            <marker date="1509344072752" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
-            <marker date="1509344072752" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
-            <marker date="1509344072752" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
-            <marker date="1509344072752" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
-            <marker date="1509344072752" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
-            <marker date="1509344072752" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
-            <marker date="1509344072752" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
-            <marker date="1509344072752" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
-            <marker date="1509344072752" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
-            <marker date="1509344072752" expanded="true" signature="13882:13955" ph="SELECT email... Friends" />
-            <marker date="1509344072752" expanded="true" signature="13882:14052" ph="SELECT email... " />
-            <marker date="1509344072752" expanded="true" signature="13979:14052" ph="SELECT email... Friends" />
-            <marker date="1509344072752" expanded="true" signature="14396:14449" ph="INSERT INTO Friends... " />
-            <marker date="1509344072752" expanded="true" signature="14588:14635" ph="SELECT email... Users" />
-            <marker date="1509344072752" expanded="true" signature="14907:14954" ph="SELECT album... Albums" />
-            <marker date="1509344072752" expanded="true" signature="15249:15290" ph="INSERT INTO Albums... " />
-            <marker date="1509344072752" expanded="true" signature="15358:15411" ph="INSERT INTO Owns... " />
-            <marker date="1509344072752" expanded="true" signature="15715:15758" ph="SELECT name Albums" />
-            <marker date="1509344072752" expanded="true" signature="16104:16198" ph="SELECT A.nam... Albums" />
-            <marker date="1509344072752" expanded="true" signature="16154:16194" ph="SELECT album... Owns" />
-            <marker date="1509344072752" expanded="true" signature="16471:16517" ph="SELECT user_... Users" />
-            <marker date="1509344072752" expanded="true" signature="16752:16800" ph="SELECT tag_n... Tags" />
-            <marker date="1509344072752" expanded="true" signature="17004:17112" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17113" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17146" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17004:17149" ph="SELECT imgda... Photos" />
-            <marker date="1509344072752" expanded="true" signature="17060:17111" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17060:17112" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17365:17385" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17408:17444" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17597:17686" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17635:17682" ph="SELECT photo... Contains" />
-            <marker date="1509344072752" expanded="true" signature="17725:17761" ph="DELETE FROM " />
-            <marker date="1509344072752" expanded="true" signature="17866:17911" ph="SELECT * FRO... Photos" />
-            <marker date="1509344072752" expanded="true" signature="18009:18098" ph="SELECT tag_n... Tags" />
-            <marker date="1509344072752" expanded="true" signature="18402:18446" ph="SELECT p.img... " />
-            <marker date="1509344072752" expanded="true" signature="18402:18540" ph="SELECT p.img... Photos" />
-            <marker date="1509344072752" expanded="true" signature="18480:18539" ph="SELECT DISTI... Tag_in" />
+            <marker date="1509344573175" expanded="true" signature="1338:1361" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="1458:1481" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="2030:2075" ph="SELECT passw... Users" />
+            <marker date="1509344573175" expanded="true" signature="2712:2758" ph="SELECT passw... Users" />
+            <marker date="1509344573175" expanded="true" signature="4365:4511" ph="INSERT INTO Users... " />
+            <marker date="1509344573175" expanded="true" signature="5076:5143" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="5313:5359" ph="SELECT user_... Users" />
+            <marker date="1509344573175" expanded="true" signature="5549:5593" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="8849:8925" ph="INSERT INTO Photos... " />
+            <marker date="1509344573175" expanded="true" signature="9139:9181" ph="INSERT INTO Tags... " />
+            <marker date="1509344573175" expanded="true" signature="9260:9320" ph="INSERT INTO Tag_in... " />
+            <marker date="1509344573175" expanded="true" signature="9486:9528" ph="INSERT INTO Tags... " />
+            <marker date="1509344573175" expanded="true" signature="9607:9667" ph="INSERT INTO Tag_in... " />
+            <marker date="1509344573175" expanded="true" signature="9833:9893" ph="INSERT INTO Contains... " />
+            <marker date="1509344573175" expanded="true" signature="13939:14012" ph="SELECT email... Friends" />
+            <marker date="1509344573175" expanded="true" signature="13939:14109" ph="SELECT email... " />
+            <marker date="1509344573175" expanded="true" signature="14036:14109" ph="SELECT email... Friends" />
+            <marker date="1509344573175" expanded="true" signature="14453:14506" ph="INSERT INTO Friends... " />
+            <marker date="1509344573175" expanded="true" signature="14645:14692" ph="SELECT email... Users" />
+            <marker date="1509344573175" expanded="true" signature="14964:15011" ph="SELECT album... Albums" />
+            <marker date="1509344573175" expanded="true" signature="15306:15347" ph="INSERT INTO Albums... " />
+            <marker date="1509344573175" expanded="true" signature="15415:15468" ph="INSERT INTO Owns... " />
+            <marker date="1509344573175" expanded="true" signature="15772:15815" ph="SELECT name Albums" />
+            <marker date="1509344573175" expanded="true" signature="16161:16255" ph="SELECT A.nam... Albums" />
+            <marker date="1509344573175" expanded="true" signature="16211:16251" ph="SELECT album... Owns" />
+            <marker date="1509344573175" expanded="true" signature="16528:16574" ph="SELECT user_... Users" />
+            <marker date="1509344573175" expanded="true" signature="16809:16857" ph="SELECT tag_n... Tags" />
+            <marker date="1509344573175" expanded="true" signature="17061:17169" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17170" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17203" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17061:17206" ph="SELECT imgda... Photos" />
+            <marker date="1509344573175" expanded="true" signature="17117:17168" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17117:17169" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17422:17442" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17465:17501" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17654:17743" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17692:17739" ph="SELECT photo... Contains" />
+            <marker date="1509344573175" expanded="true" signature="17782:17818" ph="DELETE FROM " />
+            <marker date="1509344573175" expanded="true" signature="17923:17968" ph="SELECT * FRO... Photos" />
+            <marker date="1509344573175" expanded="true" signature="18066:18155" ph="SELECT tag_n... Tags" />
+            <marker date="1509344573175" expanded="true" signature="18459:18503" ph="SELECT p.img... " />
+            <marker date="1509344573175" expanded="true" signature="18459:18597" ph="SELECT p.img... Photos" />
+            <marker date="1509344573175" expanded="true" signature="18537:18596" ph="SELECT DISTI... Tag_in" />
+            <marker date="1509344573175" expanded="true" signature="19014:19089" ph="SELECT DISTI... Tags" />
           </folding>
         </state>
       </provider>
