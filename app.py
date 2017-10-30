@@ -311,9 +311,9 @@ def manageAlbums():
         return render_template('manageAlbums.html', albums=getAlbums())
     print("album:", album)
     if (selection == "search"):
-        print("inside search")
+  #      print("inside search")
         photos = picsInAlbum(album)
-        print("photos: ", photos)
+  #      print("photos: ", photos)
         if photos is None:
             photos = []
         return render_template('manageAlbums.html', albums=getAlbums(), photos=photos, album=album)
@@ -332,13 +332,13 @@ def manageAlbums():
 
 @app.route('/photoViewing', methods=['GET', 'POST'])
 def photo_stream():
-    print("called photoviewing")
+ #   print("called photoviewing")
     tagList = getAllTags()
-    print("taglist in photo_stream:", tagList)
+ #   print("taglist in photo_stream:", tagList)
     addTags = str(request.form.get("tags"))
     userFilter = request.form.get("filter")
     like = request.form.get("like")
-    print("like: ", like)
+ #   print("like: ", like)
     if (like is not None):
         likePhoto(like)
     tagForSearch1 = request.form.get("existing_tags")
@@ -353,6 +353,7 @@ def photo_stream():
     viewId = request.form.get("view")
     if (viewId is not None):
         (users, likes, comments) = getInteractions(viewId)
+
         return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList,
                                tagForSearch=tagForSearch1, topTags=topTags(), likesVisible=True, likes=likes, users=users, comments=comments)
     print(lenGet)
@@ -364,14 +365,14 @@ def photo_stream():
         tagList.append(addTags)
 
     elif (userFilter == "all") & (len(lenGet) == 1):  # tags and all pictures
-        print("all and tags>0)")
-        print("lentag list: ", len(lenGet))
-        print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
-        print("photos with tag: ", photosWithTag(tagForSearch1))
+     #   print("all and tags>0)")
+     #   print("lentag list: ", len(lenGet))
+     #   print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
+     #   print("photos with tag: ", photosWithTag(tagForSearch1))
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     elif (userFilter=="all") & (len(lenGet) > 1):
         return render_template('photoViewing.html', photos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
-    print("calling last line")
+    #print("calling last line")
 
     return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
 
@@ -390,14 +391,18 @@ def getActivityCount():
     return render_template('activity.html', count = count )
 
 # Start comments code
-@app.route('/photoViewing.html', methods = ['GET', 'POST'])
+@app.route('/photoViewing.html', methods = ['GET','POST'])
 def postComment():
     if (request.method == 'POST'):
         comment = request.form.get("comment")     #Receives text data from comment box
-        cursor = conn.cursor()
+        print(comment)                            #Still need to connect pic information
+        pic = request.form.get("pid")
+        print(comment, pic)
+        cursor = conn.cursor()                    #execute query
         u = getUserIdFromEmail(flask_login.current_user.id)
         query = "INSERT INTO Comments(user_id, comment_id) VALUES ('{0}', '{1}')".format(u, comment)
-    else:
+    else:                                         # display results
+        print('I see')
         pass
 
 #helper functions
