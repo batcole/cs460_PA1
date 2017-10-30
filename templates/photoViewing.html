@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<p><a href='/profile'>profile</a></p>
 
 <form method="post" action="{{url_for('photo_stream') }}">
 
@@ -29,9 +30,9 @@
 </form>
 
 {% if topTags %}
-<h2>Here are all the top tags on BS</h2>
+<h2>Here are the top ten tags on BS</h2>
 {% for tag in topTags %}
-            <li>
+            <li type="1">
             {{ tag[0] }}
             </li>
         {% endfor %}
@@ -77,9 +78,10 @@
             <form method="post" action="{{url_for('photo_stream') }}">
             <img src='data:image/png;base64, {{photo[0][0]}}'/>
             <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+            </form>
+            <form method="post" action="{{url_for('photo_stream') }}">
             <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
             </form>
-
 
                 <form method="POST" action="{{ url_for('postComment') }}">
                     <br>Comment:<br>
@@ -87,9 +89,6 @@
                     <input type="hidden" name="pid" value="{{ photo[1] }}">
                     <input type="submit" value="submit">
                 </form>
-            <form method="POST" action="{{ url_for('postComment') }}">
-            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
-            </form>
 
             </li>
         {% endfor %}
@@ -110,7 +109,6 @@
 
 
 
-</form>
 
 
 </body>

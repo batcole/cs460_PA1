@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<a href='/profile'>Profile</a>
+
+
+<h1>Manage Your Albums and Photos</h1>
+
 <form method="post" action="{{ url_for('manageAlbums') }}">
-	<select name="album">
+	<label for="album">Select your Album</label>
+    <select name="album">
 		{% for album in albums %}
 		<option value="{{album}}">{{album}}</option>
 		{% endfor %}
 	</select> <br/>
+    <label for="search">Search For Photos In Album</label>
 	<input type="submit" name="submit" value="search"/> <br/>
+    <label for="search">Delete Album</label>
 	<input type="submit" name="submit" value="delete"/> <br/>
 </form>
 
 <form method="post" action="{{ url_for('manageAlbums') }}">
     {% if photos %}
-    <h2>Here's your photos for "{{album}}"</h2>
+    <h2>Here's your photos for the album "{{album}}"</h2>
         <ul>
         {% for photo in photos %}
-            <li><img src='data:image/png;base64, {{photo[0]}}'/></li>
-            <button name="submit" value="{{photo[1]}}" type="submit">DELETE PHOTO</button>
+            <li>{{photo[2]}}<br>
+            <img src='data:image/png;base64, {{photo[0]}}'/></li>
+            <button name="submit" value="{{photo[1]}}" type="submit">Delete Photo</button>
         {% endfor %}
         </ul>
     {% endif %}
 </form>
 
-    <ul>
-    <li><a href='/'>Home</a></li>
-        <li><a href='/logout'>Log Out</a></li>
-        <a href='/upload'>Upload</a>
-    </ul>
+

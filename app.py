@@ -184,7 +184,7 @@ def isEmailUnique(email):
 def protected():
     dispName = flask_login.current_user.id.split('@')[0]
     u = flask_login.current_user.id
-    return render_template('profile.html', name= u, message="Here's your profile",
+    return render_template('profile.html', name=getUserName(), message="Here's your profile",
                            friends = getFriends(u), r_friends = getFriendOfFriends(u), albums = getAlbums())
 
 # start search code
@@ -223,6 +223,7 @@ def addFriend():
     if request.method == 'POST':
         email = request.form.get('addFriend')
         u = flask_login.current_user.id
+
         '''  getUserIdFromEmail
     ans = cursor.fetchone()[0]
 TypeError: 'NoneType' object has no attribute '__getitem__'
@@ -232,7 +233,7 @@ TypeError: 'NoneType' object has no attribute '__getitem__'
         else:
         '''
         addFriendByEmail(email)
-        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u), )
+        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u), name=getUserName(), albums=getAlbums())
     else:
         return render_template('results.html')
 
@@ -673,6 +674,10 @@ def getInteractions(viewId):
     print("newlist: ", newList)
     return newList
 
+def getUserName():
+    cursor = conn.cursor()
+    cursor.execute("SELECT f_name FROM Users WHERE user_id = '{0}'".format(Id()))
+    return cursor.fetchone()
 
 
 # default page
