@@ -4,7 +4,7 @@ USE photoshare;
 
 CREATE TABLE Users
 (
-    user_id int AUTO_INCREMENT,
+    user_id int NOT NULL AUTO_INCREMENT,
     password varchar(255),
     f_name VARCHAR(255) NOT NULL DEFAULT "John" ,
     l_name VARCHAR(255) NOT NULL DEFAULT "Doe" ,
@@ -17,7 +17,7 @@ CREATE TABLE Users
 CREATE TABLE Albums
 (
     album_id int AUTO_INCREMENT,
-    date DATETIME NOT NULL DEFAULT "1000-01-01 00:00:00.000000",
+    date DATE NOT NULL DEFAULT "1000-01-01",
     name VARCHAR(40) NOT NULL,
     PRIMARY KEY (album_id)
 );
@@ -49,11 +49,11 @@ CREATE TABLE Tags
 
 CREATE TABLE Friends
 (
-    email1 VARCHAR(255) UNIQUE NOT NULL,
-    email2 VARCHAR(255) UNIQUE NOT NULL,
-    PRIMARY KEY (email1, email2),
-    FOREIGN KEY (email1) REFERENCES Users(email) ON DELETE CASCADE,
-    FOREIGN KEY (email2) REFERENCES Users(email) ON DELETE CASCADE
+    uid1 INT NOT NULL,
+    uid2 INT NOT NULL,
+    PRIMARY KEY (uid1, uid2),
+    FOREIGN KEY (uid1) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (uid2) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 

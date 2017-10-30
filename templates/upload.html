@@ -1,3 +1,4 @@
+
 <!-- author ben lawson (balawson@bu.edu) -->
 <head>
     <title>Upload a photo!</title>
@@ -24,6 +25,12 @@
 
         <label for="album">album name:</label><br />
 
+
+        <select name="album" required='false'>
+                {% for album in Albums %}
+                <option value="{{album}}">{{album}}</option>
+                {% endfor %}
+            </select><br />
 
         <form method="post" enctype="multipart/form-data" action="/upload">
 

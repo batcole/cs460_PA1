@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body>
+
+<div class = "flash">
+    <form method = "POST" action="{{ url_for("addFriend") }}">
+          <select name="addFriend">
+              {% for message in records %}
+                  <option value={{ message }}>{{ message }}</option>
+              {% endfor %}
+          </select>
+    <input type="submit" value="Add Friend" name="Submit"/>
+    </form>
+</div>
+
+
+</body>
+</html>
