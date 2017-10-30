@@ -37,11 +37,11 @@ CREATE TABLE Photos
 CREATE TABLE Comments
 (
     comment_id int NOT NULL UNIQUE AUTO_INCREMENT,
-    text VARCHAR(200) NOT NULL,
+    content VARCHAR(200) NOT NULL,
     user_id int NOT NULL,
     photo_id int NOT NULL,
     date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (comment_id, user_id, photo_id),
+    PRIMARY KEY (comment_id),
     FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id) REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
