@@ -337,7 +337,10 @@ def photo_stream():
     print("taglist in photo_stream:", tagList)
     addTags = str(request.form.get("tags"))
     userFilter = request.form.get("filter")
-
+    like = request.form.get("like")
+    print("like: ", like)
+    if (like is not None):
+        likePhoto(like)
     tagForSearch1 = request.form.get("existing_tags")
     lenGet = []
     print("tfs1: ", tagForSearch1)
@@ -347,9 +350,11 @@ def photo_stream():
             lenGet = tagForSearch1.split(",")
         else:
             lenGet.append(tagForSearch1)
+    viewId = request.form.get("view")
+    if (viewId is not None):
+        (users, likes, comments) = getInteractions(viewId)
 
     print(lenGet)
-
     print("tagList: ", tagList)
     print("userFilter: ", userFilter)
     print("new tags: ", addTags)
@@ -366,7 +371,9 @@ def photo_stream():
     elif (userFilter=="all") & (len(lenGet) > 1):
         return render_template('photoViewing.html', photos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     print("calling last line")
-    return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos = allPhotos())
+
+    return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
+
 
 
 
@@ -556,6 +563,41 @@ def topTags():
     cursor = conn.cursor()
     cursor.execute("SELECT DISTINCT tag_name FROM Tags GROUP BY tag_name ORDER BY count(*) DESC")
     return cursor.fetchall()
+
+def likePhoto(photo_id):
+    print("likePhoto called")
+    if (dupeLike(photo_id)):
+        return
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO Likes (photo_id, user_id) VALUES ('{0}', '{1}')".format(photo_id, Id()))
+    conn.commit()
+
+def dupeLike(photo_id):
+    cursor = conn.cursor()
+    if cursor.execute(
+            "SELECT photo_id FROM likes WHERE user_id = {0} AND photo_id = {1}".format(Id(), photo_id)):
+        return True
+    else:
+        return False
+
+def getInteractions(viewId):
+    cursor = conn.cursor()
+    cursor.execute("SELECT COUNT(L.photo_id) FROM Likes L, Pictures P WHERE L.photo_id = P.photo_id AND P.photo_id = {0})".format(viewId))
+    likes = cursor.fetchall()
+    userLikes = likes[0][0]
+
+    cursor.execute(str(
+        "SELECT group_concat(content separator '$') FROM Photos P, Comments C WHERE P.photo_id = C.photo_id AND p.picture_id = {0};".format(
+            viewId)))
+    list = cursor.fetchall()
+    comments = list[0][0]
+    if not comments:
+        comments = []
+    else:
+        comments = comments.split("|")
+    tuple = (likes, comments, likers)
+    return tuple
+
 
 
 # default page

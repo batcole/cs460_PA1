@@ -39,9 +39,7 @@
 
 
 
-
-
-
+<form method="post" action="{{url_for('photo_stream') }}">
 {% if photos %}
     <h2>Here are all the photos on BS</h2>
         <ul>
@@ -49,16 +47,19 @@
             <li>
             <img src='data:image/png;base64, {{photo[0]}}'/>
             <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+
                 <form method="POST" action="{{ url_for('postComment') }}">
                     Comment:<br>
                     <input type="text" name="comment">
                 </form>
           <!--  <button name="comment" value="{{ photo[1] }}" type="submit">Comment</button>-->
+            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
             </li>
         {% endfor %}
         </ul>
 {% endif %}
 
+</form>
 
 
 </body>
