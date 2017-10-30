@@ -371,11 +371,11 @@ def photo_stream():
     elif (userFilter=="all") & (len(lenGet) > 1):
         return render_template('photoViewing.html', photos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     print("calling last line")
+
     return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
 
 
 
-#helper functions
 
 @app.route('/activity', methods = ['GET', 'POST'])
 def getActivityCount():
@@ -388,7 +388,18 @@ def getActivityCount():
     print count[0][0]
     return render_template('activity.html', count = count )
 
+# Start comments code
+@app.route('/photoViewing.html', methods = ['GET', 'POST'])
+def postComment():
+    if (request.method == 'POST'):
+        comment = request.form.get("comment")     #Receives text data from comment box
+        cursor = conn.cursor()
+        u = getUserIdFromEmail(flask_login.current_user.id)
+        query = "INSERT INTO Comments(user_id, comment_id) VALUES ('{0}', '{1}')".format(u, comment)
+    else:
+        pass
 
+#helper functions
 
 def getFriendOfFriends(user):
     friends = getFriends(user)

@@ -22,23 +22,31 @@ CREATE TABLE Albums
     PRIMARY KEY (album_id)
 );
 
-CREATE TABLE Comments
-(
-    comment_id int AUTO_INCREMENT,
-    text TEXT NOT NULL,
-    date DATETIME NOT NULL,
-    PRIMARY KEY (comment_id)
-);
+
+
 
 CREATE TABLE Photos
 (
-  photo_id int  AUTO_INCREMENT,
-  user_id int,
+  photo_id int NOT NULL AUTO_INCREMENT,
+  user_id int NOT NULL,
   imgdata LONGBLOB,
   caption VARCHAR(255),
   INDEX upid_idx (user_id),
-  CONSTRAINT pictures_pk PRIMARY KEY (photo_id),
+  CONSTRAINT pictures_pk
+  PRIMARY KEY (photo_id),
   FOREIGN KEY (user_id) REFERENCES Users (user_id)
+);
+
+CREATE TABLE Comments
+(
+    comment_id int NOT NULL UNIQUE AUTO_INCREMENT,
+    text VARCHAR(200) NOT NULL,
+    user_id int NOT NULL,
+    photo_id int NOT NULL,
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (comment_id, user_id, photo_id),
+    FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (photo_id) REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Tags
@@ -82,7 +90,7 @@ CREATE TABLE Leaves_on
     user_id int AUTO_INCREMENT,
     comment_id int,
     PRIMARY KEY(User_id, comment_id),
-    FOREIGN KEY (User_id) REFERENCES Users (User_id) ON DELETE CASCADE,
+    FOREIGN KEY (User_id) REFERENCES Users (user_id) ON DELETE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES Comments(comment_id)
 );
 
