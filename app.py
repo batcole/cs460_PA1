@@ -183,7 +183,9 @@ def isEmailUnique(email):
 @flask_login.login_required
 def protected():
     dispName = flask_login.current_user.id.split('@')[0]
-    return render_template('profile.html', name= dispName, message="Here's your profile")
+    u = flask_login.current_user.id
+    return render_template('profile.html', name= u, message="Here's your profile",
+                           friends = getFriends(u), r_friends = getFriendOfFriends(u))
 
 # start search code
 @app.route('/search', methods=['GET', 'POST'])
@@ -191,23 +193,42 @@ def search():
     if request.method == 'POST':
         cursor = conn.cursor()
         email = request.form.get("search")
-        print(email, 'out')
+       # print(email, 'out')
         #if (cursor.execute("SELECT email FROM Users WHERE email LIKE '{0}'".format(uemail))):
-        print(getUsersFromEmail(email))
+        #print(getUsersFromEmail(email))
         if (getUsersFromEmail(email)!= []):
             records = getUsersFromEmail(email)
-            print(records, type(records))
+         #   print(records, type(records))
             return render_template('results.html', records=records)
     return render_template('search.html')
 
 
 
+
 # start friends code
-'''
-@app.route('/profile/<username>')
+
+@app.route('/addFriends', methods=['GET','POST'])
 @flask_login.login_required
 def addFriend():
-'''
+    if request.method == 'POST':
+        email = request.form.get('addFriend')
+        addFriendByEmail(email)
+        u = flask_login.current_user.id
+        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u))
+    else:
+        return render_template('results.html')
+
+@app.route('/profile', methods = ['GET', 'POST'])
+@flask_login.login_required
+def addRecFriend():
+    if request.method == 'POST':
+        email = request.form.get('addRecFriend')
+        print email
+        addFriendByEmail(email)
+        u = flask_login.current_user.id
+        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u))
+    else:
+        return protected()
 
 # begin photo uploading code
 # photos uploaded using base64 encoding so they can be directly embeded in HTML 
@@ -281,13 +302,47 @@ def upload_file():
 
 
 #helper functions
+def getFriendOfFriends(user):
+    friends = getFriends(user)
+    rec_list = []
+    for friend in friends:
+        # find list of B's friends, for each friend, if not friends with A, add to rec_list
+        temp = getFriends(friend)
+        print temp, friend, 'outside'
+        for i in temp:
+            if (i not in rec_list and i not in friends and i != flask_login.current_user.id):
+                print rec_list, 'inside'
+                rec_list.append(i)
+            else:
+                continue
+   # print rec_list
+    return rec_list
+
+
+def getFriends(user):
+    cursor = conn.cursor()
+    uid = getUserIdFromEmail(user)
+    query = "SELECT email FROM Friends JOIN Users ON uid2 = user_id WHERE uid1 = '{0}'" \
+            " UNION SELECT email FROM Friends JOIN Users ON uid1 = user_id WHERE uid2 = '{0}'".format(uid)
+
+    cursor.execute(query)
+    ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
+    return ans
+
+
+def addFriendByEmail(email):
+    cursor = conn.cursor()
+    u1 = getUserIdFromEmail(flask_login.current_user.id)
+    u2 = getUserIdFromEmail(email)
+    print(u1, u2, 'done')
+    query = "INSERT INTO Friends(uid1, uid2) VALUES ('{0}', '{1}')".format(u1, u2)
+    cursor.execute(query)
+    conn.commit()
 
 def getUsersFromEmail(email):
     cursor = conn.cursor()
     cursor.execute("SELECT email FROM Users WHERE email LIKE '{0}%'".format(email))
-
     ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
-    print(ans)
     return ans
 
 def getAlbumIdFromName(name):
@@ -337,8 +392,12 @@ def getAlbums():
 
 def getUserIdFromEmail(email):
     cursor = conn.cursor()
+   # print('getting userID')
     cursor.execute("SELECT user_id  FROM Users WHERE email = '{0}'".format(email))
-    return cursor.fetchone()[0]
+    ans = cursor.fetchone()[0]
+   # print(ans, type(ans))
+   # print(cursor.fetchone()[0], 'did I get it?')
+    return int(str(ans).split('L')[0])
 
 def tagUnique(tag):
     cursor = conn.cursor()

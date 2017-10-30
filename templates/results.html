@@ -7,13 +7,13 @@
 <body>
 
 <div class = "flash">
-    <form method = "POST" action="{{ url_for("search") }}">
-          <select name="friend">
+    <form method = "POST" action="{{ url_for("addFriend") }}">
+          <select name="addFriend">
               {% for message in records %}
                   <option value={{ message }}>{{ message }}</option>
               {% endfor %}
-              
           </select>
+    <input type="submit" value="Add Friend" name="Submit"/>
     </form>
 </div>
 

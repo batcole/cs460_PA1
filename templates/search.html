@@ -6,17 +6,12 @@
     <title>Search Results</title>
     <div id="content">
     <form method="post" action="{{ url_for('search') }}">
-        <label for="search">search:</label>
+        <label for="search">Search for Users:</label>
         <input type="search" name ="search"/><br />
         <input type="submit" />
     </form>
 
-<!--
-    <div class="search">
-<form action="/search" method=post>
-    <input type=text name=search value="{{ request.form.search}}"></br>
-    <div class="actions"><input type=submit value="Search"></div>
--->
+
 </form>
 </div>
 

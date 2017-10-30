@@ -19,6 +19,28 @@
 {% endif %}
 
 
+{% if friends %}
+<h3>Here are your Friends</h3>
+    <ul>
+        {% for friend in friends %}
+            <li>{{ friend }}</li>
+
+        {% endfor %}
+    </ul>
+
+    <h4>Recommended Friends</h4>
+        <form method = "POST" action="{{ url_for("addRecFriend") }}">
+          <select name="addRecFriend">
+              {% for rec in r_friends %}
+                  <option value={{ rec }}>{{ rec }}</option>
+              {% endfor %}
+          </select>
+    <input type="submit" value="Add Friend" name="Submit"/>
+    </form>
+
+{% endif %}
+
+
     <ul>
     <li><a href='/'>Home</a></li>
         <li><a href='/logout'>Log Out</a></li>
