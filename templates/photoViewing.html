@@ -47,6 +47,7 @@
             <img src='data:image/png;base64, {{photo[0]}}'/>
             <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
             <button name="comment" value="{{ photo[1] }}" type="submit">Comment</button>
+            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
             </li>
         {% endfor %}
         </ul>
