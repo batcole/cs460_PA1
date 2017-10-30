@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Comment Search</title>
+</head>
+<body>
+
+<form method="POST" action="{{ url_for('c_search') }}">
+        <label for="search">Search for Comments:</label>
+        <input type="search" name ="search"/><br />
+        <input type="submit" />
+</form>
+
+{% if comments %}
+    {% for comment in comments %}
+        <ol>
+            {{ comment[0] }}: {{ comment[1] }} comments match
+        </ol>
+    {% endfor %}
+{% endif %}
+
+
+
+</body>
+</html>
+
