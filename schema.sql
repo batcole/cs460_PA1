@@ -17,7 +17,7 @@ CREATE TABLE Users
 CREATE TABLE Albums
 (
     album_id int AUTO_INCREMENT,
-    date DATETIME NOT NULL DEFAULT "1000-01-01 00:00:00.000000",
+    date DATE NOT NULL DEFAULT "1000-01-01",
     name VARCHAR(40) NOT NULL,
     PRIMARY KEY (album_id)
 );
@@ -74,7 +74,7 @@ CREATE TABLE Contains
     FOREIGN KEY (album_id)
       REFERENCES Albums (album_id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id)
-      REFERENCES Photos (photo_id)
+      REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Leaves

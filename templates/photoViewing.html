@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Viewing</title>
+</head>
+<body>
+
+
+<form method="post" action="{{url_for('photo_stream') }}">
+
+	<label for="tags">Filter for tags</label>
+	<select name = "existing_tags" required="true">
+		{% for tag in tagList %}
+		<option value="{{tag}}">{{tag}}</option>
+		{% endfor %}
+	</select><br/>
+
+
+	<label for="tagTextLabel">Add list of tags to filter above</label>
+	<input type="text" name="tags" value="{{tags}}">
+	<select name="filter" required="true">
+		<option value="all">All Photos</option>
+		<option value="me">My Photos</option>
+	</select>
+
+	<input type="submit" name="submit" value="submit"/> <br/>
+
+</form>
+
+{% if tagPhotos %}
+<h2>Here are all the filtered photos for tag on {{ tagForSearch }}</h2>
+        <ul>
+        {% for photo in tagPhotos %}
+            <li>
+            <img src='data:image/png;base64, {{photo[0]}}'/>
+            <button name="submit" value="like" type="submit">Like</button>
+            <button name="submit" value="comment" type="comment">Comment</button>
+            </li>
+        {% endfor %}
+        </ul>
+
+{% endif %}
+
+
+{% if photos %}
+    <h2>Here are all the photos on BS</h2>
+        <ul>
+        {% for photo in photos %}
+            <li>
+            <img src='data:image/png;base64, {{photo[0]}}'/>
+            <button name="submit" value="like" type="submit">Like</button>
+            <button name="submit" value="comment" type="comment">Comment</button>
+            </li>
+        {% endfor %}
+        </ul>
+{% endif %}
+
+
+
+</body>
+</html>
