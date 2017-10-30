@@ -59,10 +59,38 @@
                     <input type="hidden" name="pid" value="{{ photo[1] }}">
                     <input type="submit" value="submit">
                 </form>
-
+            <form method="post" action="{{url_for('photo_stream') }}">
             <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
+            </form>
 
-          
+            </li>
+        {% endfor %}
+        </ul>
+{% endif %}
+
+{% if multPhotos %}
+    <h2>Here are the photos</h2>
+        <ul>
+        {% for photo in multPhotos %}
+            <li>
+            {{photo[0][2]}}<br>
+            <form method="post" action="{{url_for('photo_stream') }}">
+            <img src='data:image/png;base64, {{photo[0][0]}}'/>
+            <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
+            </form>
+
+
+                <form method="POST" action="{{ url_for('postComment') }}">
+                    <br>Comment:<br>
+                    <input type="text" name="comment" id="comment">
+                    <input type="hidden" name="pid" value="{{ photo[1] }}">
+                    <input type="submit" value="submit">
+                </form>
+            <form method="POST" action="{{ url_for('postComment') }}">
+            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
+            </form>
+
             </li>
         {% endfor %}
         </ul>
@@ -74,7 +102,7 @@
 	<label>Likes : <strong>{{likes}}</strong></label><br>
 	<label>Users Who Liked: {{users}}</label><br>
 	{% for comment in comments %}
-			<label>Comment: {{comment}}</label><br>
+			<label>Commented by: {{comment[0]}}: "{{comment[1]}}" on ({{comment[2]}})</label><br>
 	{% endfor %}
 {% endif %}
 

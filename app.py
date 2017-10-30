@@ -352,10 +352,10 @@ def photo_stream():
             lenGet.append(tagForSearch1)
     viewId = request.form.get("view")
     if (viewId is not None):
+        print("viewId called")
         (users, likes, comments) = getInteractions(viewId)
-
         return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList,
-                               tagForSearch=tagForSearch1, topTags=topTags(), likesVisible=True, likes=likes, users=users, comments=comments)
+                               tagForSearch=tagForSearch1, topTags=topTags(), likesVisible=True, likes=likes, users=users, comments=showComment(viewId))
     print(lenGet)
     print("tagList: ", tagList)
     print("userFilter: ", userFilter)
@@ -371,7 +371,7 @@ def photo_stream():
      #   print("photos with tag: ", photosWithTag(tagForSearch1))
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     elif (userFilter=="all") & (len(lenGet) > 1):
-        return render_template('photoViewing.html', photos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+        return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     #print("calling last line")
 
     return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
@@ -412,8 +412,7 @@ def postComment():
         print('method!=POST')
         pass
 
-'''
-@app.route('/photoViewing.html', methods=['GET', 'POST'])
+
 def showComment(pid):
     u = getUserIdFromEmail(flask_login.current_user.id)
     cursor = conn.cursor()
@@ -421,8 +420,8 @@ def showComment(pid):
             "Users.user_id = Comments.user_id WHERE Comments.photo_id = '{0}' ORDER BY Comments.date ASC".format(pid)
     cursor.execute(query)
     tup = cursor.fetchall()
-    return render_template('photoViewing.html', )
-'''
+    return tup
+
 
 #helper functions
 
@@ -580,13 +579,12 @@ def multipleTags(tags):
         temp = photosWithTag(i)
         if temp not in tagHolder:
             tagHolder.append(temp)
-    print("tagholder: ", tagHolder)
     return tagHolder
 
 def topTags():
     print("topTags called")
     cursor = conn.cursor()
-    cursor.execute("SELECT DISTINCT tag_name FROM Tags GROUP BY tag_name ORDER BY count(*) DESC")
+    cursor.execute("SELECT tag_name FROM Tag_in GROUP BY tag_name ORDER BY count(*) DESC")
     return cursor.fetchall()
 
 def likePhoto(photo_id):
@@ -612,13 +610,14 @@ def getInteractions(viewId):
     print("ran likes")
     holder = cursor.fetchall()
     likes = holder[0][0]
+
     cursor.execute("SELECT group_concat(u.email SEPARATOR ', ') FROM Users U, Likes L WHERE U.user_id = L.user_id AND L.photo_id={0};".format(
         viewId))
     holder = cursor.fetchall()
     usersLike = holder[0][0]
 
     cursor.execute(str(
-        "SELECT group_concat(text separator '$') FROM Photos P, Comments C WHERE P.photo_id = C.photo_id AND P.photo_id = {0};".format(
+        "SELECT group_concat(content separator '$') FROM Photos P, Comments C WHERE P.photo_id = C.photo_id AND P.photo_id = {0};".format(
             viewId)))
     holder = cursor.fetchall()
     comments = holder[0][0]
