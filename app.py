@@ -282,7 +282,7 @@ def upload_file():
                 conn.commit()
         print("photoid: ", photoid)
         print("Albumid: ", getAlbumIdFromName(album))
-        cursor.execute("INSERT INTO Contains (album_id, photo_id) VALUES  ({0}, {1})".format(getAlbumIdFromName(album),
+        cursor.execute("INSERT INTO Contain (album_id, photo_id) VALUES  ({0}, {1})".format(getAlbumIdFromName(album),
                                                                                              photoid))
         conn.commit()
         #return render_template('upload.html')
@@ -371,6 +371,20 @@ def photo_stream():
 
 
 #helper functions
+
+@app.route('/activity', methods = ['GET', 'POST'])
+def getActivityCount():
+    cursor = conn.cursor()
+    query = "SELECT Users.email, COUNT(*) FROM Users JOIN Owns ON Users.user_id = Owns.user_id JOIN Contain" \
+            " ON Owns.album_id = Contain.album_id GROUP BY Users.user_id ORDER BY Count(*) DESC LIMIT 10"
+            # Can JOIN Leaves_on ON Users.user_id = Leaves_on.user_id to get total activity count
+    cursor.execute(query)
+    count = cursor.fetchall()
+    print count[0][0]
+    return render_template('activity.html', count = count )
+
+
+
 def getFriendOfFriends(user):
     friends = getFriends(user)
     rec_list = []
@@ -479,7 +493,7 @@ def picsInAlbum(album):
     cursor = conn.cursor()
     print("pics in album called")
     print("album :", album)
-    if cursor.execute("SELECT imgdata, photo_id FROM Photos WHERE photo_id IN (SELECT photo_id FROM Contains WHERE album_id = '{0}')".format(getAlbumIdFromName(album))):
+    if cursor.execute("SELECT imgdata, photo_id FROM Photos WHERE photo_id IN (SELECT photo_id FROM Contain WHERE album_id = '{0}')".format(getAlbumIdFromName(album))):
         print("picsInAlbum query ran with something in it")
         return cursor.fetchall()
 
@@ -493,7 +507,7 @@ def deletePhoto(photo_id):
 def deleteAlbum(album):
     cursor = conn.cursor()
     albumID = getAlbumIdFromName(album)
-    cursor.execute("DELETE FROM Photos WHERE photo_id in (SELECT photo_id FROM Contains WHERE album_id = {0})".format(albumID))
+    cursor.execute("DELETE FROM Photos WHERE photo_id in (SELECT photo_id FROM Contain WHERE album_id = {0})".format(albumID))
     cursor.execute("DELETE FROM Albums WHERE album_id = {0}".format(albumID))
     conn.commit()
 

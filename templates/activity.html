@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Activity</title>
+</head>
+<body>
+
+<h2>Here are the top 10 Users by Activity</h2>
+
+
+    <form method="POST" action="{{ url_for('getActivityCount') }}">
+        <ol>
+            {% for x in count %}
+                <li>{{x[0]}}</li>
+            {% endfor %}
+        </ol>
+    </form>
+
+
+</body>
+</html>
