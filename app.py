@@ -183,7 +183,8 @@ def isEmailUnique(email):
 @flask_login.login_required
 def protected():
     dispName = flask_login.current_user.id.split('@')[0]
-    return render_template('profile.html', name= dispName, message="Here's your profile")
+    albums = getAlbums()
+    return render_template('profile.html', name= dispName, message="Here's your profile", albums = albums)
 
 # start search code
 @app.route('/search', methods=['GET', 'POST'])
@@ -265,7 +266,7 @@ def upload_file():
                                                                                              photoid))
         conn.commit()
         #return render_template('upload.html')
-        return render_template('hello.html', name=flask_login.current_user.id, message='Photo uploaded!', photos=getUsersPhotos(uid))
+        return render_template('profile.html', name=flask_login.current_user.id, message='Photo uploaded!', photos=getUsersPhotos(uid))
     # The method is GET so we return a  HTML form to upload the a photo.
     elif (whichSubmit == "createAlbum"):
         print("whichSubmit running")
@@ -274,10 +275,74 @@ def upload_file():
     else:
         return render_template('upload.html', Albums=getAlbums())
 
-
-
-
 # end photo uploading code
+
+# album mgmt
+
+@app.route('/manageAlbums', methods=['GET', 'POST'])
+@flask_login.login_required
+def manageAlbums():
+    print("manage albums running")
+    try:
+        album = request.form.get("album")
+        selection = request.form.get("submit")
+    except:
+        print ("dunno what happened")
+        return render_template('manageAlbums.html', albums=getAlbums())
+    print("album:", album)
+    if (selection == "search"):
+        print("inside search")
+        photos = picsInAlbum(album)
+        print("photos: ", photos)
+        if photos is None:
+            photos = []
+        return render_template('manageAlbums.html', albums=getAlbums(), photos=photos, album=album)
+    elif (selection == "delete"):
+        deleteAlbum(album)
+        return render_template('manageAlbums.html', albums=getAlbums())
+    elif selection is not None:
+        deletePhoto(selection)
+        return render_template('manageAlbums.html', albums=getAlbums())
+        #super sexy code, this makes selection into the value we need to delete ;)
+    return render_template('manageAlbums.html', albums=getAlbums())
+
+# end album mgmt
+
+# Start tag mgmt
+
+@app.route('/photoViewing', methods=['GET', 'POST'])
+def photo_stream():
+    print("called photoviewing")
+    tagList = getAllTags()
+    print("taglist in photo_stream:", tagList)
+    addTags = str(request.form.get("tags"))
+    userFilter = request.form.get("filter")
+    tagForSearch1 = request.form.get("existing_tags")
+    lenGet = tagForSearch1.split(",")
+    print("tfs1: ",tagForSearch1)
+    print(tagForSearch1)
+   # return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList,
+   #                        tagForSearch=tagForSearch1)
+    print("tagList: ", tagList)
+    print("userFilter: ", userFilter)
+    print("new tags: ", addTags)
+    if (addTags is not None) & (addTags != ""):
+        tagList.append(addTags)
+    elif (userFilter == "all") & (len(lenGet) == 1):  # tags and all pictures
+        print("all and tags>0)")
+        print("lentag list: ", len(lenGet))
+        print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
+        print("photos with tag: ", photosWithTag(tagForSearch1))
+        return render_template('photoViewing.html', tagPhotos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1)
+    print("calling last line")
+    return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList)
+
+
+
+
+
+
+
 
 
 #helper functions
@@ -285,7 +350,6 @@ def upload_file():
 def getUsersFromEmail(email):
     cursor = conn.cursor()
     cursor.execute("SELECT email FROM Users WHERE email LIKE '{0}%'".format(email))
-
     ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
     print(ans)
     return ans
@@ -346,6 +410,48 @@ def tagUnique(tag):
         return False
     else:
         return True
+
+def picsInAlbum(album):
+    cursor = conn.cursor()
+    print("pics in album called")
+    print("album :", album)
+    if cursor.execute("SELECT imgdata, photo_id FROM Photos WHERE photo_id IN (SELECT photo_id FROM Contains WHERE album_id = '{0}')".format(getAlbumIdFromName(album))):
+        print("picsInAlbum query ran with something in it")
+        return cursor.fetchall()
+
+def deletePhoto(photo_id):
+    print("delete photo called: ", photo_id)
+    cursor = conn.cursor()
+   # cursor.execute("DELETE FROM Contains")
+    cursor.execute("DELETE FROM Photos WHERE photo_id = {0}".format(photo_id))
+    conn.commit()
+
+def deleteAlbum(album):
+    cursor = conn.cursor()
+    albumID = getAlbumIdFromName(album)
+    cursor.execute("DELETE FROM Photos WHERE photo_id in (SELECT photo_id FROM Contains WHERE album_id = {0})".format(albumID))
+    cursor.execute("DELETE FROM Albums WHERE album_id = {0}".format(albumID))
+    conn.commit()
+
+def allPhotos():
+    cursor = conn.cursor()
+    cursor.execute("SELECT imgdata, photo_id, caption FROM Photos")
+    return cursor.fetchall()
+
+def getAllTags():
+    cursor = conn.cursor()
+    cursor.execute("SELECT tag_name, count(*) AS frequency FROM Tags GROUP BY tag_name ORDER BY count(*) DESC;")
+    list = [item[0] for item in [[str(item) for item in results] for results in cursor.fetchall()]]
+    tagHolder = []
+    tagHolder.extend(list)
+    return tagHolder
+
+def photosWithTag(tags):
+    print("calling photosWithTag")
+    print("tags: ",tags)
+    cursor = conn.cursor()
+    cursor.execute("SELECT p.imgdata, p.photo_id, p.caption FROM Photos AS P WHERE p.photo_id IN (SELECT DISTINCT p.photo_id FROM Tag_in WHERE tag_name = '{0}')".format(tags))
+    return cursor.fetchall()
 
 
 

@@ -74,7 +74,7 @@ CREATE TABLE Contains
     FOREIGN KEY (album_id)
       REFERENCES Albums (album_id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id)
-      REFERENCES Photos (photo_id)
+      REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Leaves
