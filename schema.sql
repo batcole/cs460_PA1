@@ -66,7 +66,7 @@ CREATE TABLE Owns
     FOREIGN KEY (album_id) REFERENCES Albums(album_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Contains
+CREATE TABLE Contain
 (
     album_id int,
     photo_id int,
@@ -77,7 +77,7 @@ CREATE TABLE Contains
       REFERENCES Photos (photo_id) ON DELETE CASCADE
 );
 
-CREATE TABLE Leaves
+CREATE TABLE Leaves_on
 (
     user_id int AUTO_INCREMENT,
     comment_id int,
