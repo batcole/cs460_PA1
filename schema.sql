@@ -10,7 +10,7 @@ CREATE TABLE Users
     l_name VARCHAR(255) NOT NULL DEFAULT "Doe" ,
     email varchar(255) UNIQUE,
     h_town VARCHAR(255),
-    dob DATE,
+    dob DATE DEFAULT NULL,
     PRIMARY KEY (user_id)
 );
 
