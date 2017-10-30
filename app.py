@@ -391,19 +391,38 @@ def getActivityCount():
     return render_template('activity.html', count = count )
 
 # Start comments code
+
+
+
 @app.route('/photoViewing.html', methods = ['GET','POST'])
 def postComment():
+    print('postComment called')
     if (request.method == 'POST'):
         comment = request.form.get("comment")     #Receives text data from comment box
         print(comment)                            #Still need to connect pic information
-        pic = request.form.get("pid")
-        print(comment, pic)
+        pid = request.form.get("pid")
+        print(comment, pid)
         cursor = conn.cursor()                    #execute query
         u = getUserIdFromEmail(flask_login.current_user.id)
-        query = "INSERT INTO Comments(user_id, comment_id) VALUES ('{0}', '{1}')".format(u, comment)
+        query = "INSERT INTO Comments(user_id, content, photo_id) VALUES ('{0}', '{1}', '{2}')".format(u, comment, pid)
+        cursor.execute(query)
+        conn.commit()
+        return photo_stream()
     else:                                         # display results
-        print('I see')
+        print('method!=POST')
         pass
+
+'''
+@app.route('/photoViewing.html', methods=['GET', 'POST'])
+def showComment(pid):
+    u = getUserIdFromEmail(flask_login.current_user.id)
+    cursor = conn.cursor()
+    query = "SELECT Users.email, Comments.content, Comments.date FROM Users JOIN Comments ON " \
+            "Users.user_id = Comments.user_id WHERE Comments.photo_id = '{0}' ORDER BY Comments.date ASC".format(pid)
+    cursor.execute(query)
+    tup = cursor.fetchall()
+    return render_template('photoViewing.html', )
+'''
 
 #helper functions
 

@@ -56,13 +56,13 @@
                 <form method="POST" action="{{ url_for('postComment') }}">
                     <br>Comment:<br>
                     <input type="text" name="comment" id="comment">
-                    <input type="submit" name="comment">
+                    <input type="hidden" name="pid" value="{{ photo[1] }}">
+                    <input type="submit" value="submit">
                 </form>
 
-                <!--<button type="submit" name="pid" hidden="hidden" value="{{ photo[1] }}">pid</button>-->
-
-          <!--  <button name="comment" value="{{ photo[1] }}" type="submit">Comment</button>-->
             <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
+
+          
             </li>
         {% endfor %}
         </ul>
