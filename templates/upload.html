@@ -1,4 +1,4 @@
-
+<p><a href='/profile'>profile</a></p>
 <!-- author ben lawson (balawson@bu.edu) -->
 <head>
     <title>Upload a photo!</title>
@@ -12,8 +12,9 @@
                 <input type="file" name="photo" required='true' /><br />
                <label for="caption">Caption this:</label><br />
                  <input type="text" name="caption" required='true' /><br />
-              <label for="album">Tag this:</label><br />
+              <label for="tags">Tag this:</label><br />
                 <input type="text" name="tags" required='false' /><br />
+             <label for="tags">Album:</label><br />
                 <select name="album" required='true'>
                 {% for album in Albums %}
                 <option value="{{album}}">{{album}}</option>
@@ -22,15 +23,6 @@
                 <input type="submit" value="Upload" name="Submit"/>
 
             </form>
-
-        <label for="album">album name:</label><br />
-
-
-        <select name="album" required='false'>
-                {% for album in Albums %}
-                <option value="{{album}}">{{album}}</option>
-                {% endfor %}
-            </select><br />
 
         <form method="post" enctype="multipart/form-data" action="/upload">
 
@@ -42,13 +34,5 @@
 
 
 
-        {% if albums %}
-                <h2>Here's your albums</h2>
-                    <ul>
-                    {% for album in albums %}
-                        {{ album[2] }}
-                     {% endfor %}
-                     </ul>
-            {% endif %}
-    </body>
+
 
