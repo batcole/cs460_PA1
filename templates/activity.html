@@ -6,9 +6,10 @@
 </head>
 <body>
 
-<h2>Here are the top 10 Users by Activity</h2>
 
 
+{% if count %}
+    <h2>Here are the top 10 Users by Activity</h2>
     <form method="POST" action="{{ url_for('getActivityCount') }}">
         <ol>
             {% for x in count %}
@@ -16,7 +17,15 @@
             {% endfor %}
         </ol>
     </form>
+{% endif %}
+
+
+{% if not count %}
+    <h3>Sorry, no user activity at this moment.</h3>
+{% endif %}
 
 
 </body>
+<li><a href='/'>Home</a></li>
+<li><a href='/profile'>Profile</a></li>
 </html>

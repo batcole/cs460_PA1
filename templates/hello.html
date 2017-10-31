@@ -1,6 +1,12 @@
 <!-- author ben lawson (balawson@bu.edu) -->
 <!doctype html>
-<p><a href='/profile'>profile</a></p>
+
+{% if message %}
+  <h4>{{message}}!</h4>
+{% endif %}
+<title>Photoshare</title>
+
+<p><a href='/profile'>Profile</a></p>
 
 
 <div class = 'title' >
@@ -10,11 +16,6 @@
 
 <h4>Search For Comments:</h4>
 <p><a href='/c_search'>Comment Search</a></p>
-
-{% if message %}
-  <h4>{{message}}!</h4>
-{% endif %}
-<title>Photoshare</title>
 
 {% if name %}
   <h1>Hello {{ name }}!</h1>
@@ -32,7 +33,10 @@
 
 {% endif %}
 
+<br>
 
+
+<h5>Navigate:</h5>
 <p><a href='/activity'>See User Activity</a></p>
 <p><a href='/login'>Log In</a></p>
 <p><a href='/register'>Register</a></p>
