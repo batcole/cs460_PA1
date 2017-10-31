@@ -417,16 +417,28 @@ def postComment():
     print('postComment called')
     if (request.method == 'POST'):
         comment = request.form.get("comment")     #Receives text data from comment box
-        print(comment)                            #Still need to connect pic information
+       # print(comment)                            #Still need to connect pic information
         pid = request.form.get("pid")
-        print(comment, pid)
-        cursor = conn.cursor()                    #execute query
-        u = getUserIdFromEmail(flask_login.current_user.id)
-        query = "INSERT INTO Comments(user_id, content, photo_id) VALUES ('{0}', '{1}', '{2}')".format(u, comment, pid)
-        cursor.execute(query)
-        conn.commit()
-        return photo_stream()
-    else:                                         # display results
+        print('int(pid) is: ', int(pid))
+        cursor = conn.cursor()
+
+        #Block users from commenting on own photos
+        cheq = "SELECT Photos.photo_id FROM Users JOIN Photos ON Users.user_id = Photos.user_id"
+        cursor.execute(cheq)
+        check = cursor.fetchall()
+        for i in check:
+            if (int(pid) == i[0]):          #int(check[i][0])
+                return render_template('/photoViewing.html', message = 'Sorry, you cannot comment on your own photos',
+                                   tagList = getAllTags(), topTags = topTags(), photos = allPhotos())
+            else:
+                pass
+        else:
+            u = getUserIdFromEmail(flask_login.current_user.id)
+            query = "INSERT INTO Comments(user_id, content, photo_id) VALUES ('{0}', '{1}', '{2}')".format(u, comment, pid)
+            cursor.execute(query)
+            conn.commit()
+            return photo_stream()
+    else:
         print('method!=POST')
         pass
 
