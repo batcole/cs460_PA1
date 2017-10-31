@@ -2,49 +2,15 @@
 <!doctype html>
 
 {% if message %}
-  <h4>{{message}}!</h4>
+  <h1>{{message}}!</h1>
 {% endif %}
 <title>Photoshare</title>
 
-<p><a href='/profile'>Profile</a></p>
 
-
-<div class = 'title' >
-    <h4>Search For Users:</h4>
-</div>
-<p><a href='/search'>User Search</a></p>
-
-<h4>Search For Comments:</h4>
-<p><a href='/c_search'>Comment Search</a></p>
-
-{% if name %}
-  <h1>Hello {{ name }}!</h1>
-{% endif %}
-
-{% if photos %}
-<h2>Here's your photos</h2>
-
-    <ul>
-    {% for photo in photos %}
-        <li>{{photo[2]}}<br>
-        <img src='data:image/png;base64, {{photo[0]}}'/></li>
-    {% endfor %}
-    </ul>
-
-{% endif %}
-
-<br>
-
-
-<h5>Navigate:</h5>
-<p><a href='/activity'>See User Activity</a></p>
-<p><a href='/login'>Log In</a></p>
-<p><a href='/register'>Register</a></p>
-<p><a href='/photoViewing'>Photo Viewing</a></p>
-
-<p>or</p>
-
-    <ul>
-    <li><a href='/'>Home</a></li>
-    </ul>
-<p><a href='/upload'>upload</a></p>
+<li> <a href='/'>Home</a></li><br>
+<li><a href='/register'>Register</a></li><br>
+<li> <a href='/login'>Log In</a> </li><br>
+<li><a href='/photoViewing'>Photo Viewing</a></li><br>
+<li><a href='/search'>Search for Users or Comments</a></li><br>
+<li><a href='/activity'>See Top Users</a></li><br>
+<li><a href='/c_search'>Search for Comments</a></li>

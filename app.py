@@ -182,10 +182,9 @@ def isEmailUnique(email):
 @app.route('/profile')
 @flask_login.login_required
 def protected():
-    dispName = flask_login.current_user.id.split('@')[0]
     u = flask_login.current_user.id
     return render_template('profile.html', name=getUserName(), message="Here's your profile",
-                           friends = getFriends(u), r_friends = getFriendOfFriends(u), albums = getAlbums())
+                           friends = getFriends(u), r_friends = getFriendOfFriends(u), albums = getAlbums(), photoRecs=photoRecommendations())
 
 # start search code
 @app.route('/search', methods=['GET', 'POST'])
@@ -245,7 +244,7 @@ def addRecFriend():
         email = request.form.get('addRecFriend')
         addFriendByEmail(email)
         u = flask_login.current_user.id
-        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u))
+        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u), photoRecs=photoRecommendations())
     else:
         return protected()
 
@@ -324,7 +323,7 @@ def manageAlbums():
         print ("dunno what happened")
         return render_template('manageAlbums.html', albums=getAlbums())
     print("album:", album)
-    if (selection == "search"):
+    if (selection == "search") and (album is not None):
   #      print("inside search")
         photos = picsInAlbum(album)
   #      print("photos: ", photos)
@@ -377,19 +376,19 @@ def photo_stream():
     print("userFilter: ", userFilter)
     print("new tags: ", addTags)
     print("lenGet length: ", len(lenGet))
-    if (addTags is not None) & (addTags != ""):
+    if (addTags is not None) and (addTags != ""):
         tagList.append(addTags)
 
-    elif (userFilter == "all") & (len(lenGet) == 1):
+    elif (userFilter == "all") and (len(lenGet) == 1):
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter == "me") & (len(lenGet) == 1) & (flask_login.current_user.is_authenticated):
+    elif (userFilter == "me") and (len(lenGet) == 1) and (flask_login.current_user.is_authenticated):
         return render_template('photoViewing.html', photos=myTagPhotos(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter == "me") & (len(lenGet) > 1) & (flask_login.current_user.is_authenticated):
+    elif (userFilter == "me") and (len(lenGet) > 1) and (flask_login.current_user.is_authenticated):
         return render_template('photoViewing.html', multPhotos=myMultipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter=="all") & (len(lenGet) > 1):
+    elif (userFilter=="all") and (len(lenGet) > 1):
         print("multTags(lenGet: ", multipleTags(lenGet))
         return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     #print("calling last line")
@@ -684,9 +683,10 @@ def getUserName():
     return cursor.fetchone()
 
 def myTagPhotos(tags):
+    print("myTagPhotos called")
     cursor = conn.cursor()
     cursor.execute(
-        "SELECT P.imgdata, P.photo_id, P.caption FROM Photos AS P, Tag_in AS T WHERE P.photo_id = T.photo_id AND P.photo_id IN (SELECT DISTINCT photo_id FROM Tag_in WHERE user_id = '{0}' AND  tag_name = '{1}')".format(
+        "SELECT DISTINCT P.imgdata, P.photo_id, P.caption FROM Photos AS P, Tag_in AS T WHERE P.photo_id = T.photo_id AND P.photo_id IN (SELECT DISTINCT photo_id FROM Tag_in WHERE user_id = '{0}' AND  tag_name = '{1}')".format(
             Id(), tags))
     return cursor.fetchall()
 
@@ -700,6 +700,15 @@ def myMultipleTags(tags):
         if temp not in tagHolder:
             tagHolder.append(temp)
     return tagHolder
+
+def photoRecommendations():
+    print("getRecommendations called")
+    cursor.execute(
+        "SELECT DISTINCT P.imgdata, P.photo_id FROM Photos P, Tag_in T WHERE P.photo_id = T.photo_id AND P.user_id != {0} AND T.tag_name IN (SELECT tag_name FROM Tag_in GROUP BY tag_name ORDER BY count(tag_name)) LIMIT 5;".format(
+            Id()))
+    return cursor.fetchall()
+
+
 
 # default page
 @app.route("/", methods=['GET'])

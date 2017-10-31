@@ -7,32 +7,27 @@
   <h1>Hello {{ name[0] }}!</h1>
 {% endif %}
 
-{% if photos %}
-<h2>Here's your photos</h2>
-	<ul>
-	{% for photo in photos %}
-
-		<li>{{photo[2]}}<br>
-		<img src='data:image/png;base64, {{photo[0]}}'/></li>
-	{% endfor %}
-	</ul>
+{% if albums %}
+    <li><a href='/manageAlbums'>Manage Albums and Photos</a></li><br>
 {% endif %}
 
 
 
-    {% if albums %}
-
-        <li><a href='/manageAlbums'>Manage Albums and Photos</a></li><br>
-    {% endif %}
-
-
-<li> <a href='/'>Home</a></li><br>
-<li> <a href='/logout'>Log Out</a> </li><br>
-<li><a href='/upload'>Upload</a></li><br>
 <li><a href='/photoViewing'>Photo Viewing</a></li><br>
+<li><a href='/upload'>Upload</a></li><br>
 <li><a href='/search'>Search for Friends or Comments</a></li><br>
 <li><a href='/activity'>See Top Users</a></li><br>
+<li> <a href='/logout'>Log Out</a> </li><br>
 
+{% if photoRecs %}
+<h2>Here are your recommended photos:</h2>
+<ul>
+	{% for photo in photoRecs %}
+	<li><img src='data:image/png;base64, {{photo[0]}}'/></li>
+	{% endfor %}
+</ul>
+
+{% endif %}
 
 {% if friends %}
 <h3>Here are your Friends</h3>
