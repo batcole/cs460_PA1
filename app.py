@@ -143,13 +143,14 @@ def register_user():
         print(cursor.execute("INSERT INTO Users (email, password, f_name, l_name, h_town, dob) VALUES "
                              "('{0}', '{1}', '{2}', '{3}', '{4}', '{5}')".format(email, password, f_name, l_name, h_town, dob)))
         conn.commit()
-        # log user in
         user = User()
         user.id = email
-
-        username = email.split('@')[0] # splits email at '@', uses first part of email as username
         flask_login.login_user(user)
-        return render_template('hello.html', name=username, message='Account Created!')
+        u = flask_login.current_user.id
+
+        return render_template('profile.html', name=getUserName(), message='Account Created! Here is your profile', friends = getFriends(u),
+                            r_friends = getFriendOfFriends(u), albums = getAlbums(), photoRecs=photoRecommendations())
+
     else:
         print("couldn't find all tokens")
         return render_template('register.html', suppress ='False')
@@ -221,8 +222,9 @@ def c_search():
 def addFriend():
     if request.method == 'POST':
         email = request.form.get('addFriend')
-        u = flask_login.current_user.id
+        u = getUserIdFromEmail(flask_login.current_user.id)
         print ('current = ', u, 'email = ', email)
+        print('getFriends(u) returns : ', getFriends(u))
         if (isFriend(email)):
             return render_template('profile.html', message = 'You are already Friends',
                                    friends = getFriends(u), name=getUserName(), albums = getAlbums())
@@ -481,11 +483,14 @@ def getFriendOfFriends(user):
 def getFriends(id):
     cursor = conn.cursor()
 
-    query = "SELECT email FROM Friends JOIN Users ON uid2 = user_id WHERE uid1 = '{0}'" \
-            " UNION SELECT email FROM Friends JOIN Users ON uid1 = user_id WHERE uid2 = '{0}'".format(id)
+    query = "SELECT Users.email FROM Friends JOIN Users ON Friends.uid2 = Users.user_id WHERE Friends.uid1 = '{0}'" \
+            " UNION SELECT Users.email FROM Friends JOIN Users ON Friends.uid1 = Users.user_id WHERE Friends.uid2 = '{0}'".format(id)
 
     cursor.execute(query)
-    ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
+    fetch = cursor.fetchall()
+    print('fetch = ', fetch)
+    ans = [spot[0] for spot in [[str(spot) for spot in results] for results in fetch]]
+    print('in getFriends(), ans =', ans)
     return ans
 
 def isFriend(uid):
