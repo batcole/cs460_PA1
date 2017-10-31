@@ -391,6 +391,10 @@ def photo_stream():
     elif (userFilter=="all") and (len(lenGet) > 1):
         print("multTags(lenGet: ", multipleTags(lenGet))
         return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+
+    elif (userFilter=="me") and (not flask_login.current_user.is_authenticated):
+        return render_template('photoViewing.html', tagList=tagList, topTags=topTags(), photos=allPhotos(), message="You need an account to have photos!")
+
     #print("calling last line")
 
     return render_template('photoViewing.html',  tagList=tagList, topTags=topTags(), photos=allPhotos())
