@@ -277,11 +277,6 @@ def upload_file():
         tags = tags.split(",")
         photo_data = base64.standard_b64encode(imgfile.read())
         cursor = conn.cursor()
-        '''
-        cursor.execute(
-            "INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data,
-                                                                                                    caption))
-        '''
         cursor.execute("INSERT INTO Photos (user_id, imgdata, caption) VALUES ('{0}', '{1}', '{2}' )".format(uid, photo_data, caption))
         conn.commit()
         photoid = cursor.lastrowid
@@ -305,7 +300,7 @@ def upload_file():
                                                                                              photoid))
         conn.commit()
         #return render_template('upload.html')
-        return render_template('profile.html', name=flask_login.current_user.id, message='Photo uploaded!', photos=getUsersPhotos(uid))
+        return render_template('profile.html', message='Photo uploaded!', photos=getUsersPhotos(uid), name=getUserName())
     # The method is GET so we return a  HTML form to upload the a photo.
     elif (whichSubmit == "createAlbum"):
         print("whichSubmit running")
@@ -385,12 +380,15 @@ def photo_stream():
     if (addTags is not None) & (addTags != ""):
         tagList.append(addTags)
 
-    elif (userFilter == "all") & (len(lenGet) == 1):  # tags and all pictures
-     #   print("all and tags>0)")
-     #   print("lentag list: ", len(lenGet))
-     #   print("tagforsearch1: ", tagForSearch1, type(tagForSearch1))
-     #   print("photos with tag: ", photosWithTag(tagForSearch1))
+    elif (userFilter == "all") & (len(lenGet) == 1):
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+
+    elif (userFilter == "me") & (len(lenGet) == 1) & (flask_login.current_user.is_authenticated):
+        return render_template('photoViewing.html', photos=myTagPhotos(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+
+    elif (userFilter == "me") & (len(lenGet) > 1) & (flask_login.current_user.is_authenticated):
+        return render_template('photoViewing.html', multPhotos=myMultipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
+
     elif (userFilter=="all") & (len(lenGet) > 1):
         print("multTags(lenGet: ", multipleTags(lenGet))
         return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
@@ -685,6 +683,23 @@ def getUserName():
     cursor.execute("SELECT f_name FROM Users WHERE user_id = '{0}'".format(Id()))
     return cursor.fetchone()
 
+def myTagPhotos(tags):
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT P.imgdata, P.photo_id, P.caption FROM Photos AS P, Tag_in AS T WHERE P.photo_id = T.photo_id AND P.photo_id IN (SELECT DISTINCT photo_id FROM Tag_in WHERE user_id = '{0}' AND  tag_name = '{1}')".format(
+            Id(), tags))
+    return cursor.fetchall()
+
+def myMultipleTags(tags):
+    print("calling myMultipleTags")
+    print("tags: ", tags)
+    tagHolder = []
+    for i in tags:
+        temp = myTagPhotos(i)
+        print("temp: ", temp)
+        if temp not in tagHolder:
+            tagHolder.append(temp)
+    return tagHolder
 
 # default page
 @app.route("/", methods=['GET'])
