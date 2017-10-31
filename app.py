@@ -357,8 +357,9 @@ def photo_stream():
     addTags = str(request.form.get("tags"))
     userFilter = request.form.get("filter")
     like = request.form.get("like")
- #   print("like: ", like)
+
     if (like is not None):
+        print("like: ", like)
         likePhoto(like)
     tagForSearch1 = request.form.get("existing_tags")
     lenGet = []
@@ -375,6 +376,7 @@ def photo_stream():
         (users, likes, comments) = getInteractions(viewId)
         return render_template('photoViewing.html', photos=allPhotos(), tagList=tagList,
                                tagForSearch=tagForSearch1, topTags=topTags(), likesVisible=True, likes=likes, users=users, comments=showComment(viewId))
+
     print(lenGet)
     print("tagList: ", tagList)
     print("userFilter: ", userFilter)
@@ -390,6 +392,7 @@ def photo_stream():
      #   print("photos with tag: ", photosWithTag(tagForSearch1))
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     elif (userFilter=="all") & (len(lenGet) > 1):
+        print("multTags(lenGet: ", multipleTags(lenGet))
         return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     #print("calling last line")
 
@@ -622,6 +625,7 @@ def multipleTags(tags):
     tagHolder = []
     for i in tags:
         temp = photosWithTag(i)
+        print("temp: ", temp)
         if temp not in tagHolder:
             tagHolder.append(temp)
     return tagHolder
@@ -650,6 +654,7 @@ def dupeLike(photo_id):
 
 def getInteractions(viewId):
     print("getInteractions called")
+    print("viewId: ", viewId)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(L.photo_id) FROM Likes L, Photos P WHERE L.photo_id = P.photo_id AND P.photo_id = {0}".format(viewId))
     print("ran likes")

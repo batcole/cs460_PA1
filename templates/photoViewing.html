@@ -39,21 +39,17 @@
 {% endif %}
 
 
-
-
 {% if photos %}
     <h2>Here are the photos</h2>
         <ul>
         {% for photo in photos %}
             <li>
+            {{ photo[2] }}
             <form method="post" action="{{url_for('photo_stream') }}">
             <img src='data:image/png;base64, {{photo[0]}}'/>
-
             <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
 
             </form>
-
-
                 <form method="POST" action="{{ url_for('postComment') }}">
                     <br>Comment:<br>
                     <input type="text" name="comment" id="comment">
@@ -73,24 +69,27 @@
     <h2>Here are the photos</h2>
         <ul>
         {% for photo in multPhotos %}
+            {% for phot in photo %}
             <li>
-            {{photo[0][2]}}<br>
+            {{phot[2]}}<br>
             <form method="post" action="{{url_for('photo_stream') }}">
-            <img src='data:image/png;base64, {{photo[0][0]}}'/>
-            <button name="like" value="{{ photo[1] }}" type="submit">Like</button>
+            <img src='data:image/png;base64, {{phot[0]}}'/>
+            <button name="like" value="{{ phot[1] }}" type="submit">Like</button>
             </form>
-            <form method="post" action="{{url_for('photo_stream') }}">
-            <button type="submit" name="view" value="{{photo[1]}}">View likes and comments</button>
-            </form>
+
 
                 <form method="POST" action="{{ url_for('postComment') }}">
                     <br>Comment:<br>
                     <input type="text" name="comment" id="comment">
-                    <input type="hidden" name="pid" value="{{ photo[1] }}">
+                    <input type="hidden" name="pid" value="{{ phot[1] }}">
                     <input type="submit" value="submit">
                 </form>
+            <form method="post" action="{{url_for('photo_stream') }}">
+            <button type="submit" name="view" value="{{phot[0][1]}}">View likes and comments</button>
+            </form>
 
             </li>
+                {% endfor %}
         {% endfor %}
         </ul>
 {% endif %}
