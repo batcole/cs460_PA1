@@ -377,19 +377,19 @@ def photo_stream():
     print("userFilter: ", userFilter)
     print("new tags: ", addTags)
     print("lenGet length: ", len(lenGet))
-    if (addTags is not None) & (addTags != ""):
+    if (addTags is not None) and (addTags != ""):
         tagList.append(addTags)
 
-    elif (userFilter == "all") & (len(lenGet) == 1):
+    elif (userFilter == "all") and (len(lenGet) == 1):
         return render_template('photoViewing.html', photos=photosWithTag(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter == "me") & (len(lenGet) == 1) & (flask_login.current_user.is_authenticated):
+    elif (userFilter == "me") and (len(lenGet) == 1) and (flask_login.current_user.is_authenticated):
         return render_template('photoViewing.html', photos=myTagPhotos(tagForSearch1), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter == "me") & (len(lenGet) > 1) & (flask_login.current_user.is_authenticated):
+    elif (userFilter == "me") and (len(lenGet) > 1) and (flask_login.current_user.is_authenticated):
         return render_template('photoViewing.html', multPhotos=myMultipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
 
-    elif (userFilter=="all") & (len(lenGet) > 1):
+    elif (userFilter=="all") and (len(lenGet) > 1):
         print("multTags(lenGet: ", multipleTags(lenGet))
         return render_template('photoViewing.html', multPhotos=multipleTags(lenGet), tagList=tagList, tagForSearch=tagForSearch1, topTags=topTags())
     #print("calling last line")
@@ -418,16 +418,28 @@ def postComment():
     print('postComment called')
     if (request.method == 'POST'):
         comment = request.form.get("comment")     #Receives text data from comment box
-        print(comment)                            #Still need to connect pic information
+       # print(comment)                            #Still need to connect pic information
         pid = request.form.get("pid")
-        print(comment, pid)
-        cursor = conn.cursor()                    #execute query
-        u = getUserIdFromEmail(flask_login.current_user.id)
-        query = "INSERT INTO Comments(user_id, content, photo_id) VALUES ('{0}', '{1}', '{2}')".format(u, comment, pid)
-        cursor.execute(query)
-        conn.commit()
-        return photo_stream()
-    else:                                         # display results
+        print('int(pid) is: ', int(pid))
+        cursor = conn.cursor()
+
+        #Block users from commenting on own photos
+        cheq = "SELECT Photos.photo_id FROM Users JOIN Photos ON Users.user_id = Photos.user_id"
+        cursor.execute(cheq)
+        check = cursor.fetchall()
+        for i in check:
+            if (int(pid) == i[0]):          #int(check[i][0])
+                return render_template('/photoViewing.html', message = 'Sorry, you cannot comment on your own photos',
+                                   tagList = getAllTags(), topTags = topTags(), photos = allPhotos())
+            else:
+                pass
+        else:
+            u = getUserIdFromEmail(flask_login.current_user.id)
+            query = "INSERT INTO Comments(user_id, content, photo_id) VALUES ('{0}', '{1}', '{2}')".format(u, comment, pid)
+            cursor.execute(query)
+            conn.commit()
+            return photo_stream()
+    else:
         print('method!=POST')
         pass
 
