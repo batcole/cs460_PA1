@@ -223,17 +223,18 @@ def addFriend():
     if request.method == 'POST':
         email = request.form.get('addFriend')
         u = flask_login.current_user.id
-
-        '''  getUserIdFromEmail
-    ans = cursor.fetchone()[0]
-TypeError: 'NoneType' object has no attribute '__getitem__'
-                email not passing correctly
-        if (isFriend(getUserIdFromEmail(email))):
-            return render_template('profile.html', message = 'You are already Friends', friends = getFriends(u),albums = getAlbums())  # name=getUserName()
+        print ('current = ', u, 'email = ', email)
+        if (isFriend(email)):
+            return render_template('profile.html', message = 'You are already Friends',
+                                   friends = getFriends(u), name=getUserName(), albums = getAlbums())
+        elif (u == email):
+            print (getFriends(u))
+            return render_template('profile.html', message='You cannot Friend yourself', friends=getFriends(u),
+                                   albums=getAlbums(), name=getUserName())
         else:
-        '''
-        addFriendByEmail(email)
-        return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u), name=getUserName(), albums=getAlbums())
+            addFriendByEmail(email)
+            return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u),
+                                   name=getUserName(), albums=getAlbums())
     else:
         return render_template('results.html')
 
@@ -242,7 +243,6 @@ TypeError: 'NoneType' object has no attribute '__getitem__'
 def addRecFriend():
     if request.method == 'POST':
         email = request.form.get('addRecFriend')
-        print email
         addFriendByEmail(email)
         u = flask_login.current_user.id
         return render_template('profile.html', message = 'Friend Added!', friends = getFriends(u))
@@ -404,10 +404,9 @@ def getActivityCount():
     cursor = conn.cursor()
     query = "SELECT Users.email, COUNT(*) FROM Users JOIN Owns ON Users.user_id = Owns.user_id JOIN Contain" \
             " ON Owns.album_id = Contain.album_id GROUP BY Users.user_id ORDER BY Count(*) DESC LIMIT 10"
-            # Can JOIN Leaves_on ON Users.user_id = Leaves_on.user_id to get total activity count
     cursor.execute(query)
     count = cursor.fetchall()
-   # print count[0][0]
+
     return render_template('activity.html', count = count )
 
 # Start comments code
@@ -464,23 +463,27 @@ def getFriendOfFriends(user):
     return rec_list
 
 
-def getFriends(user):
+def getFriends(id):
     cursor = conn.cursor()
-    uid = getUserIdFromEmail(user)
+
     query = "SELECT email FROM Friends JOIN Users ON uid2 = user_id WHERE uid1 = '{0}'" \
-            " UNION SELECT email FROM Friends JOIN Users ON uid1 = user_id WHERE uid2 = '{0}'".format(uid)
+            " UNION SELECT email FROM Friends JOIN Users ON uid1 = user_id WHERE uid2 = '{0}'".format(id)
 
     cursor.execute(query)
     ans = [spot[0] for spot in [[str(spot) for spot in results] for results in cursor.fetchall()]]
     return ans
 
-def isFriend(user):
+def isFriend(uid):
     cursor = conn.cursor()
     u1 = getUserIdFromEmail(flask_login.current_user.id)
-    u2 = getUserIdFromEmail(user)
-    query = "SELECT email FROM Friends WHERE (uid1 = '{0}' AND uid2 = '{1}') OR (uid1 = '{1}' AND uid2 = '{0}')".format(u1, u2)
+    u2 = getUserIdFromEmail(uid)
+    print('cursor...')
+    query = "SELECT * FROM Friends WHERE (uid1 = '{0}' AND uid2 = '{1}') OR (uid1 = '{1}' AND uid2 = '{0}')".format(u1, u2)
+
     cursor.execute(query)
+    print('cursor executed')
     f = cursor.fetchall()
+    print(f)
     if (len(f) == 0):
         return False
     else:
@@ -490,14 +493,12 @@ def addFriendByEmail(email):
     cursor = conn.cursor()
     u1 = getUserIdFromEmail(flask_login.current_user.id)
     u2 = getUserIdFromEmail(email)
-    if (u1 == u2):
-        return render_template('profile.html', message = 'You cannot Friend yourself', friends = getFriends(u1),
-                                albums=getAlbums())  #name=getUserName()
-    else:
-        print(u1, u2, 'done')
-        query = "INSERT INTO Friends(uid1, uid2) VALUES ('{0}', '{1}')".format(u1, u2)
-        cursor.execute(query)
-        conn.commit()
+
+
+    print(u1, u2, 'done')
+    query = "INSERT INTO Friends(uid1, uid2) VALUES ('{0}', '{1}')".format(u1, u2)
+    cursor.execute(query)
+    conn.commit()
 
 def getCommentsFromText(string):
     cursor = conn.cursor()
@@ -703,7 +704,7 @@ def myMultipleTags(tags):
 # default page
 @app.route("/", methods=['GET'])
 def hello():
-    return render_template('hello.html', message='Welcome to Photoshare')
+    return render_template('hello.html', message='Welcome to BS - A Photo Sharing Site!')
 
 
 if __name__ == "__main__":
